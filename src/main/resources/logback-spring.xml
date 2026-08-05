@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+	<!-- Dev e teste: console legivel por humano. -->
+	<springProfile name="!prod">
+		<include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+		<root level="INFO">
+			<appender-ref ref="CONSOLE"/>
+		</root>
+	</springProfile>
+
+	<!-- Prod: JSON em uma linha por evento, para o coletor de logs conseguir indexar. -->
+	<springProfile name="prod">
+		<appender name="JSON" class="ch.qos.logback.core.ConsoleAppender">
+			<encoder class="net.logstash.logback.encoder.LogstashEncoder">
+				<includeContext>false</includeContext>
+				<customFields>{"app":"newstech"}</customFields>
+			</encoder>
+		</appender>
+		<root level="INFO">
+			<appender-ref ref="JSON"/>
+		</root>
+	</springProfile>
+
+</configuration>

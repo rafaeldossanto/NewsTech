@@ -1,0 +1,32 @@
+# Nenhum default sensivel neste arquivo. Tudo que e segredo vem de variavel de ambiente:
+#   MONGODB_URI        - conexao do banco
+#   ANTHROPIC_API_KEY  - lida diretamente pelo SDK da Claude (AnthropicOkHttpClient.fromEnv())
+#   ADMIN_USERNAME     - usuario do painel administrativo
+#   ADMIN_PASSWORD     - senha do painel (texto puro; codificada em memoria na subida)
+newstech:
+  admin:
+    username: ${ADMIN_USERNAME}
+    password: ${ADMIN_PASSWORD}
+
+spring:
+  docker:
+    compose:
+      enabled: false
+  data:
+    mongodb:
+      # Sem valor default de proposito: se a variavel nao existir, a aplicacao nao sobe.
+      # Falhar na subida e melhor do que subir apontando para o banco errado.
+      uri: ${MONGODB_URI}
+  thymeleaf:
+    cache: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+logging:
+  level:
+    root: INFO
+    com.web.newstech: INFO

@@ -18,18 +18,54 @@ repositories {
 	mavenCentral()
 }
 
+// Testes de integracao (Testcontainers) separados dos unitarios.
+// `./gradlew test` roda unitario e nao precisa de Docker.
+// `./gradlew integrationTest` sobe container e roda o que depende de infra real.
+sourceSets {
+	integrationTest {
+		compileClasspath += sourceSets.main.output + sourceSets.test.output
+		runtimeClasspath += sourceSets.main.output + sourceSets.test.output
+	}
+}
+
+configurations {
+	integrationTestImplementation.extendsFrom testImplementation
+	integrationTestCompileOnly.extendsFrom testCompileOnly
+	integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
+	integrationTestAnnotationProcessor.extendsFrom testAnnotationProcessor
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	implementation 'org.springframework.boot:spring-boot-starter-mongodb'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+	// Integra sec:authorize e afins no Thymeleaf
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+
+	// SDK oficial da Claude API - triagem (Haiku) e curadoria/escrita (Opus)
+	implementation 'com.anthropic:anthropic-java:2.34.0'
+	// Parser de RSS/Atom
+	implementation 'com.rometools:rome:2.1.0'
+	// Sanitizacao do HTML que vem nos feeds. Obrigatorio: sem isso e XSS no proprio portal.
+	implementation 'org.jsoup:jsoup:1.18.3'
+	// Cache local das consultas quentes (home, listagens). Versao gerenciada pelo Spring Boot.
+	implementation 'com.github.ben-manes.caffeine:caffeine'
+	// Layouts/fragments reutilizaveis no Thymeleaf
+	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.4.0'
+
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
 	annotationProcessor 'org.projectlombok:lombok'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat-runtime'
+
+	// Logs JSON no perfil prod
+	runtimeOnly 'net.logstash.logback:logstash-logback-encoder:8.0'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-actuator-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-data-mongodb-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-mongodb-test'
@@ -37,6 +73,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-validation-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
 	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+	testImplementation 'org.springframework.security:spring-security-test'
 	testImplementation 'org.testcontainers:testcontainers-junit-jupiter'
 	testImplementation 'org.testcontainers:testcontainers-mongodb'
 	testCompileOnly 'org.projectlombok:lombok'
@@ -46,4 +83,21 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+	// src/test tem fontes de apoio (TestcontainersConfiguration, TestNewsTechApplication)
+	// que nao sao @Test. Sem isto o Gradle 9 falha o build por "nenhum teste descoberto"
+	// sempre que um sourceSet estiver so com codigo de suporte.
+	failOnNoDiscoveredTests = false
 }
+
+tasks.register('integrationTest', Test) {
+	description = 'Runs integration tests (requires Docker).'
+	group = 'verification'
+	testClassesDirs = sourceSets.integrationTest.output.classesDirs
+	classpath = sourceSets.integrationTest.runtimeClasspath
+	useJUnitPlatform()
+	failOnNoDiscoveredTests = false
+	shouldRunAfter tasks.named('test')
+}
+
+// `check` deliberadamente NAO depende de integrationTest:
+// build local e CI nao devem exigir Docker.

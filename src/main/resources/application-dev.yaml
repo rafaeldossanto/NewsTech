@@ -1,0 +1,22 @@
+spring:
+  docker:
+    compose:
+      enabled: true
+      lifecycle-management: start_and_stop
+  data:
+    mongodb:
+      # Fallback para rodar sem Docker. Com o compose ativo, as ConnectionDetails
+      # do container tem precedencia sobre esta uri.
+      uri: mongodb://root:secret@localhost:27017/newstech?authSource=admin
+  thymeleaf:
+    cache: false
+
+newstech:
+  admin:
+    # Credencial de conveniencia, valida so em dev. O perfil prod exige variavel de ambiente.
+    username: admin
+    password: admin
+
+logging:
+  level:
+    com.web.newstech: DEBUG

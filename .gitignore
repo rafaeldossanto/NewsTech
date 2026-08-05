@@ -35,3 +35,10 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Segredos ###
+# ANTHROPIC_API_KEY e MONGODB_URI vivem em variavel de ambiente.
+# Se em algum momento forem para arquivo, ele nao vai junto no commit.
+.env
+*.env
+!.env.example

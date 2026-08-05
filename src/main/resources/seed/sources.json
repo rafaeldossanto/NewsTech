@@ -1,0 +1,234 @@
+[
+  {
+    "name": "OpenAI Blog",
+    "feedUrl": "https://openai.com/blog/rss.xml",
+    "connectorType": "RSS",
+    "trustWeight": 95,
+    "active": true,
+    "note": "Fonte primaria: anuncios oficiais de modelos e produtos."
+  },
+  {
+    "name": "Google DeepMind",
+    "feedUrl": "https://deepmind.google/blog/rss.xml",
+    "connectorType": "RSS",
+    "trustWeight": 95,
+    "active": true,
+    "note": "Fonte primaria: pesquisa e lancamentos da DeepMind."
+  },
+  {
+    "name": "Google AI Blog",
+    "feedUrl": "https://blog.google/technology/ai/rss/",
+    "connectorType": "RSS",
+    "trustWeight": 90,
+    "active": true,
+    "note": "Fonte primaria: trilha de IA do blog oficial do Google."
+  },
+  {
+    "name": "Anthropic (via Google News)",
+    "feedUrl": "https://news.google.com/rss/search?q=site:anthropic.com&hl=pt-BR&gl=BR&ceid=BR:pt-419",
+    "connectorType": "RSS",
+    "trustWeight": 85,
+    "active": true,
+    "note": "A Anthropic nao publica RSS (404 em /rss.xml, /feed.xml e /news/rss.xml, verificado em 2026-08-04). Este e um contorno via Google News filtrado por site: o volume e menor e ha atraso em relacao ao anuncio. Trocar assim que houver feed oficial."
+  },
+  {
+    "name": "Mistral AI (via Google News)",
+    "feedUrl": "https://news.google.com/rss/search?q=site:mistral.ai&hl=pt-BR&gl=BR&ceid=BR:pt-419",
+    "connectorType": "RSS",
+    "trustWeight": 80,
+    "active": true,
+    "note": "mistral.ai/feed.xml derruba a conexao do bot. Mesmo contorno da Anthropic."
+  },
+  {
+    "name": "Hugging Face Blog",
+    "feedUrl": "https://huggingface.co/blog/feed.xml",
+    "connectorType": "RSS",
+    "trustWeight": 85,
+    "active": true,
+    "note": "Modelos novos e artigos tecnicos da comunidade."
+  },
+  {
+    "name": "GitHub Blog",
+    "feedUrl": "https://github.blog/feed/",
+    "connectorType": "RSS",
+    "trustWeight": 85,
+    "active": true,
+    "note": "Mudancas de plataforma que afetam quem desenvolve."
+  },
+  {
+    "name": "Ars Technica",
+    "feedUrl": "https://feeds.arstechnica.com/arstechnica/index",
+    "connectorType": "RSS",
+    "trustWeight": 80,
+    "active": true,
+    "note": "Cobertura tecnica com profundidade acima da media."
+  },
+  {
+    "name": "Simon Willison",
+    "feedUrl": "https://simonwillison.net/atom/everything/",
+    "connectorType": "RSS",
+    "trustWeight": 80,
+    "active": true,
+    "note": "Analise tecnica de LLMs com teste pratico, nao repercussao."
+  },
+  {
+    "name": "Techmeme",
+    "feedUrl": "https://www.techmeme.com/feed.xml",
+    "connectorType": "RSS",
+    "trustWeight": 75,
+    "active": true,
+    "note": "Agregador. Util como sinal do que esta repercutindo; o link primario costuma estar no proprio item."
+  },
+  {
+    "name": "arXiv cs.AI",
+    "feedUrl": "http://export.arxiv.org/rss/cs.AI",
+    "connectorType": "RSS",
+    "trustWeight": 75,
+    "active": true,
+    "note": "Volume alto (200+ por dia). Depende da triagem ser rigorosa."
+  },
+  {
+    "name": "arXiv cs.CL",
+    "feedUrl": "http://export.arxiv.org/rss/cs.CL",
+    "connectorType": "RSS",
+    "trustWeight": 75,
+    "active": true,
+    "note": "Processamento de linguagem natural. Volume alto."
+  },
+  {
+    "name": "arXiv cs.SE",
+    "feedUrl": "http://export.arxiv.org/rss/cs.SE",
+    "connectorType": "RSS",
+    "trustWeight": 70,
+    "active": true,
+    "note": "Engenharia de software."
+  },
+  {
+    "name": "TechCrunch",
+    "feedUrl": "https://techcrunch.com/feed/",
+    "connectorType": "RSS",
+    "trustWeight": 70,
+    "active": true,
+    "note": "Volume alto e muita materia de negocios; a triagem derruba boa parte."
+  },
+  {
+    "name": "The Verge",
+    "feedUrl": "https://www.theverge.com/rss/index.xml",
+    "connectorType": "RSS",
+    "trustWeight": 70,
+    "active": true,
+    "note": "Cobertura ampla de tecnologia, nem sempre tecnica."
+  },
+  {
+    "name": "The Register",
+    "feedUrl": "https://www.theregister.com/headlines.atom",
+    "connectorType": "RSS",
+    "trustWeight": 70,
+    "active": true,
+    "note": "Boa cobertura de infraestrutura e seguranca."
+  },
+  {
+    "name": "InfoQ",
+    "feedUrl": "https://feed.infoq.com/",
+    "connectorType": "RSS",
+    "trustWeight": 70,
+    "active": true,
+    "note": "Conteudo para desenvolvedores. Edicao global."
+  },
+  {
+    "name": "Hacker News (front page)",
+    "feedUrl": "https://hnrss.org/frontpage",
+    "connectorType": "RSS",
+    "trustWeight": 60,
+    "active": true,
+    "note": "Sinal de relevancia da comunidade, nao fonte primaria. O link costuma apontar para a fonte real."
+  },
+  {
+    "name": "Lobsters",
+    "feedUrl": "https://lobste.rs/rss",
+    "connectorType": "RSS",
+    "trustWeight": 60,
+    "active": true,
+    "note": "Comunidade menor e mais tecnica que o HN."
+  },
+  {
+    "name": "Tecnoblog",
+    "feedUrl": "https://tecnoblog.net/feed/",
+    "connectorType": "RSS",
+    "trustWeight": 60,
+    "active": true,
+    "note": "Fonte em portugues."
+  },
+  {
+    "name": "Canaltech",
+    "feedUrl": "https://canaltech.com.br/rss/",
+    "connectorType": "RSS",
+    "trustWeight": 55,
+    "active": true,
+    "note": "Fonte em portugues, volume alto e bastante conteudo de consumo."
+  },
+  {
+    "name": "OpenJDK releases",
+    "feedUrl": "https://github.com/openjdk/jdk/releases.atom",
+    "connectorType": "RSS",
+    "trustWeight": 90,
+    "active": true,
+    "note": "Feed Atom de releases. Baixo volume, alta precisao."
+  },
+  {
+    "name": "Python releases",
+    "feedUrl": "https://github.com/python/cpython/releases.atom",
+    "connectorType": "RSS",
+    "trustWeight": 90,
+    "active": true,
+    "note": "Feed Atom de releases."
+  },
+  {
+    "name": "Rust releases",
+    "feedUrl": "https://github.com/rust-lang/rust/releases.atom",
+    "connectorType": "RSS",
+    "trustWeight": 90,
+    "active": true,
+    "note": "Feed Atom de releases."
+  },
+  {
+    "name": "Node.js releases",
+    "feedUrl": "https://github.com/nodejs/node/releases.atom",
+    "connectorType": "RSS",
+    "trustWeight": 90,
+    "active": true,
+    "note": "Feed Atom de releases."
+  },
+  {
+    "name": "Spring Boot releases",
+    "feedUrl": "https://github.com/spring-projects/spring-boot/releases.atom",
+    "connectorType": "RSS",
+    "trustWeight": 90,
+    "active": true,
+    "note": "Feed Atom de releases."
+  },
+  {
+    "name": "Meta AI Blog",
+    "feedUrl": "https://ai.meta.com/blog/rss/",
+    "connectorType": "RSS",
+    "trustWeight": 90,
+    "active": false,
+    "note": "DESATIVADA: o servidor encerra a conexao do bot (verificado em 2026-08-04). Reativar se passar a responder."
+  },
+  {
+    "name": "InfoWorld",
+    "feedUrl": "https://www.infoworld.com/index.rss",
+    "connectorType": "RSS",
+    "trustWeight": 65,
+    "active": false,
+    "note": "DESATIVADA: conexao encerrada pelo servidor (verificado em 2026-08-04)."
+  },
+  {
+    "name": "InfoQ Brasil",
+    "feedUrl": "https://feed.infoq.com/br/",
+    "connectorType": "RSS",
+    "trustWeight": 70,
+    "active": false,
+    "note": "DESATIVADA: responde 200 mas com zero itens (verificado em 2026-08-04). A edicao global esta ativa."
+  }
+]

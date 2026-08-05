@@ -1,4 +1,4 @@
-package com.web.newsTach;
+package com.web.newstech;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
@@ -7,7 +7,7 @@ public class ServletInitializer extends SpringBootServletInitializer {
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(NewsTachApplication.class);
+		return application.sources(NewsTechApplication.class);
 	}
 
 }

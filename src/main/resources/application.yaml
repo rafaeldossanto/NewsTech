@@ -1,3 +1,47 @@
 spring:
   application:
-    name: newsTach
+    name: newstech
+  profiles:
+    default: dev
+  data:
+    mongodb:
+      # Indices sao criados explicitamente no MongoBootstrap, com nome e opcoes sob controle.
+      # auto-index-creation cria indice a partir de anotacao, sem controle de nome nem de TTL.
+      auto-index-creation: false
+  threads:
+    virtual:
+      # A carga e I/O-bound: dezenas de fetches de feed em paralelo.
+      enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+
+newstech:
+  mongo:
+    # Retencao da materia-prima do pipeline, aplicada como indice TTL em rawItems.fetchedAt.
+    # Nao e arquivo publico: e insumo. A retencao limitada faz parte do desenho juridico do projeto.
+    raw-item-retention-days: 90
+
+  ingest:
+    # Identifica o bot para quem opera as fontes, com um canal de contato.
+    user-agent: 'NewsTechBot/0.1 (+https://newstech.example/bot)'
+    fetch-timeout-seconds: 20
+    max-items-per-fetch: 50
+    interval: PT10M
+    backoff-base-minutes: 10
+    backoff-max-hours: 6
+
+  claude:
+    triage-model: claude-haiku-4-5
+    # Inclui thinking + resposta.
+    triage-max-tokens: 2048
+    # Corte inicial. Calibrar lendo os descartados antes de mexer.
+    relevance-threshold: 40
+    triage-batch-size: 25
+    # ATENCAO: este e o unico agendador que gasta dinheiro. Ligar so depois de
+    # configurar o limite de gasto no console da Anthropic.
+    auto-triage: false
+    triage-interval: PT15M

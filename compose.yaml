@@ -1,9 +1,19 @@
 services:
   mongodb:
-    image: 'mongo:latest'
+    image: 'mongo:8.0'
+    container_name: 'newstech-mongo'
     environment:
-      - 'MONGO_INITDB_DATABASE=mydatabase'
-      - 'MONGO_INITDB_ROOT_PASSWORD=secret'
+      - 'MONGO_INITDB_DATABASE=newstech'
       - 'MONGO_INITDB_ROOT_USERNAME=root'
+      - 'MONGO_INITDB_ROOT_PASSWORD=secret'
     ports:
-      - '27017'
+      # Porta fixa (o Initializr deixa dinamica) para o Compass conectar sempre no mesmo lugar.
+      # Se ja houver um Mongo nativo na 27017, trocar para '27018:27017' e ajustar a uri do perfil dev.
+      - '27017:27017'
+    volumes:
+      # Volume nomeado: coletar feeds leva dias para formar um corpus util,
+      # nao da para perder isso a cada 'compose down'.
+      - 'newstech-mongo-data:/data/db'
+
+volumes:
+  newstech-mongo-data:
