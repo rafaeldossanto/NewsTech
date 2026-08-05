@@ -1,0 +1,461 @@
+/*
+ * Identidade do NewsTech.
+ *
+ * Portal de noticias de tecnologia lido por gente tecnica: a prioridade e densidade
+ * de informacao com hierarquia obvia, nao espaco em branco generoso.
+ *
+ * Tres decisoes que sustentam o resto:
+ *
+ * 1. Serif nas manchetes, sans no corpo, mono nos metadados. E o vocabulario de
+ *    jornal aplicado a um publico de desenvolvedor - a mono nos selos de fonte e
+ *    nos horarios faz o dado parecer dado.
+ *
+ * 2. Nenhuma webfont. A CSP do ambiente bloqueia CDN de fonte, e um @font-face que
+ *    falha em silencio e pior que uma stack de sistema bem escolhida.
+ *
+ * 3. Cor codifica hierarquia editorial, nao decora. O vermelho so aparece em
+ *    manchete; o azul-petroleo e institucional. Se tudo fosse colorido, nada seria.
+ */
+
+:root {
+	/* neutros com vies azul frio - cinza puro parece nao escolhido */
+	--paper:       #F3F4F2;
+	--surface:     #FCFCFB;
+	--surface-alt: #EBEDEA;
+	--rule:        #D7DAD6;
+	--rule-strong: #B9BEB9;
+
+	--ink:         #12151A;
+	--ink-soft:    #454D56;
+	--ink-faint:   #7B848D;
+
+	--accent:      #14506B;  /* institucional: links, navegacao, marcadores */
+	--accent-soft: #E0EAEF;
+	--flag:        #A8281E;  /* exclusivo de manchete */
+	--flag-soft:   #F6E4E1;
+
+	--serif: Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+	--sans:  system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, sans-serif;
+	--mono:  "Cascadia Mono", Consolas, ui-monospace, "SF Mono", Menlo, monospace;
+
+	--gutter: 1.5rem;
+	--shell: 1180px;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--paper:       #0E1114;
+		--surface:     #15191D;
+		--surface-alt: #1C2126;
+		--rule:        #262C32;
+		--rule-strong: #39424A;
+
+		--ink:         #E7E9E7;
+		--ink-soft:    #A6AEB5;
+		--ink-faint:   #6E777F;
+
+		--accent:      #74B4D2;
+		--accent-soft: #172B35;
+		--flag:        #E2705F;
+		--flag-soft:   #2C1B18;
+	}
+}
+
+:root[data-theme="dark"] {
+	--paper:       #0E1114;
+	--surface:     #15191D;
+	--surface-alt: #1C2126;
+	--rule:        #262C32;
+	--rule-strong: #39424A;
+
+	--ink:         #E7E9E7;
+	--ink-soft:    #A6AEB5;
+	--ink-faint:   #6E777F;
+
+	--accent:      #74B4D2;
+	--accent-soft: #172B35;
+	--flag:        #E2705F;
+	--flag-soft:   #2C1B18;
+}
+
+:root[data-theme="light"] {
+	--paper:       #F3F4F2;
+	--surface:     #FCFCFB;
+	--surface-alt: #EBEDEA;
+	--rule:        #D7DAD6;
+	--rule-strong: #B9BEB9;
+
+	--ink:         #12151A;
+	--ink-soft:    #454D56;
+	--ink-faint:   #7B848D;
+
+	--accent:      #14506B;
+	--accent-soft: #E0EAEF;
+	--flag:        #A8281E;
+	--flag-soft:   #F6E4E1;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+	margin: 0;
+	background: var(--paper);
+	color: var(--ink);
+	font-family: var(--sans);
+	font-size: 16px;
+	line-height: 1.6;
+	-webkit-font-smoothing: antialiased;
+}
+
+.shell {
+	max-width: var(--shell);
+	margin: 0 auto;
+	padding: 0 var(--gutter);
+}
+
+a { color: inherit; text-decoration: none; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+/* ============ cabecalho ============ */
+
+.site-header {
+	border-bottom: 2px solid var(--ink);
+	background: var(--surface);
+	position: sticky;
+	top: 0;
+	z-index: 10;
+}
+
+.site-header .bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1.5rem;
+	padding: .85rem 0;
+}
+
+.wordmark {
+	font-family: var(--serif);
+	font-size: 1.6rem;
+	font-weight: 700;
+	letter-spacing: -.02em;
+	line-height: 1;
+	white-space: nowrap;
+}
+.wordmark em { font-style: normal; color: var(--accent); }
+
+.site-nav {
+	display: flex;
+	gap: 1.15rem;
+	flex-wrap: wrap;
+	font-family: var(--mono);
+	font-size: .76rem;
+	letter-spacing: .07em;
+	text-transform: uppercase;
+}
+.site-nav a { color: var(--ink-soft); padding: .2rem 0; border-bottom: 2px solid transparent; }
+.site-nav a:hover { color: var(--ink); border-bottom-color: var(--rule-strong); }
+.site-nav a.on { color: var(--ink); border-bottom-color: var(--accent); }
+
+.theme-toggle {
+	font-family: var(--mono);
+	font-size: .72rem;
+	letter-spacing: .06em;
+	background: transparent;
+	border: 1px solid var(--rule-strong);
+	color: var(--ink-soft);
+	padding: .3rem .6rem;
+	border-radius: 3px;
+	cursor: pointer;
+}
+.theme-toggle:hover { color: var(--ink); border-color: var(--ink-faint); }
+
+/* ============ estruturas de secao ============ */
+
+main { padding: 2rem 0 4rem; }
+
+.section-label {
+	font-family: var(--mono);
+	font-size: .72rem;
+	letter-spacing: .16em;
+	text-transform: uppercase;
+	color: var(--ink-faint);
+	font-weight: 600;
+	margin: 0 0 .9rem;
+	padding-bottom: .5rem;
+	border-bottom: 1px solid var(--rule);
+	display: flex;
+	align-items: baseline;
+	gap: .6rem;
+}
+.section-label .count { color: var(--rule-strong); font-weight: 400; }
+
+/* ============ metadados de uma peca ============ */
+
+.meta {
+	display: flex;
+	align-items: center;
+	gap: .5rem;
+	flex-wrap: wrap;
+	font-family: var(--mono);
+	font-size: .71rem;
+	color: var(--ink-faint);
+	letter-spacing: .03em;
+}
+.meta .src { color: var(--accent); font-weight: 600; }
+.meta .sep { color: var(--rule-strong); }
+
+.flag {
+	font-family: var(--mono);
+	font-size: .66rem;
+	letter-spacing: .1em;
+	text-transform: uppercase;
+	font-weight: 700;
+	padding: .12rem .4rem;
+	border-radius: 2px;
+	background: var(--flag-soft);
+	color: var(--flag);
+}
+
+/* ============ manchete ============ */
+
+.lead {
+	display: grid;
+	gap: 2rem;
+	padding-bottom: 2.25rem;
+	margin-bottom: 2.25rem;
+	border-bottom: 2px solid var(--ink);
+}
+@media (min-width: 900px) {
+	.lead { grid-template-columns: 1.55fr 1fr; }
+}
+
+.lead-story h2 {
+	font-family: var(--serif);
+	font-size: clamp(2rem, 4.4vw, 3.05rem);
+	line-height: 1.06;
+	font-weight: 700;
+	letter-spacing: -.018em;
+	margin: .55rem 0 .7rem;
+	text-wrap: balance;
+}
+.lead-story h2 a:hover { color: var(--accent); }
+.lead-story .summary {
+	font-family: var(--serif);
+	font-size: 1.13rem;
+	line-height: 1.55;
+	color: var(--ink-soft);
+	margin: 0 0 .7rem;
+	max-width: 60ch;
+}
+.lead-story .angle {
+	font-size: .87rem;
+	color: var(--ink-faint);
+	border-left: 2px solid var(--accent);
+	padding-left: .7rem;
+	max-width: 58ch;
+}
+
+/* ============ destaques ============ */
+
+.highlights { display: flex; flex-direction: column; gap: 1.35rem; }
+
+.highlight { padding-bottom: 1.35rem; border-bottom: 1px solid var(--rule); }
+.highlight:last-child { border-bottom: none; padding-bottom: 0; }
+.highlight h3 {
+	font-family: var(--serif);
+	font-size: 1.14rem;
+	line-height: 1.25;
+	font-weight: 700;
+	margin: .35rem 0 .3rem;
+	text-wrap: balance;
+}
+.highlight h3 a:hover { color: var(--accent); }
+.highlight p { margin: 0; font-size: .89rem; color: var(--ink-soft); line-height: 1.5; }
+
+/* ============ radar: lista densa ============ */
+
+.radar { border-top: 1px solid var(--rule); }
+
+.radar-item {
+	display: grid;
+	grid-template-columns: 4.6rem 1fr;
+	gap: .2rem 1rem;
+	padding: .85rem 0;
+	border-bottom: 1px solid var(--rule);
+	align-items: baseline;
+}
+.radar-item:hover { background: var(--surface); }
+
+.radar-item .when {
+	font-family: var(--mono);
+	font-size: .72rem;
+	color: var(--ink-faint);
+	font-variant-numeric: tabular-nums;
+	white-space: nowrap;
+}
+.radar-item h3 {
+	font-family: var(--serif);
+	font-size: 1.04rem;
+	line-height: 1.3;
+	font-weight: 400;
+	margin: 0 0 .2rem;
+	text-wrap: balance;
+}
+.radar-item h3 a:hover { color: var(--accent); }
+.radar-item .line { grid-column: 2; }
+
+@media (max-width: 620px) {
+	.radar-item { grid-template-columns: 1fr; }
+	.radar-item .line { grid-column: 1; }
+}
+
+/* ============ grade de topicos ============ */
+
+.grid {
+	display: grid;
+	gap: 1.75rem;
+	grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+}
+
+.card { display: flex; flex-direction: column; gap: .4rem; }
+.card h3 {
+	font-family: var(--serif);
+	font-size: 1.2rem;
+	line-height: 1.24;
+	font-weight: 700;
+	margin: .2rem 0 0;
+	text-wrap: balance;
+}
+.card h3 a:hover { color: var(--accent); }
+.card p { margin: 0; font-size: .9rem; color: var(--ink-soft); line-height: 1.5; }
+
+/* ============ pagina de story ============ */
+
+.article { max-width: 44rem; }
+.article h1 {
+	font-family: var(--serif);
+	font-size: clamp(1.9rem, 4vw, 2.7rem);
+	line-height: 1.1;
+	font-weight: 700;
+	letter-spacing: -.015em;
+	margin: .6rem 0 .9rem;
+	text-wrap: balance;
+}
+.article .summary {
+	font-family: var(--serif);
+	font-size: 1.2rem;
+	line-height: 1.6;
+	color: var(--ink);
+	margin: 0 0 1.2rem;
+}
+.article .angle {
+	font-size: .98rem;
+	color: var(--ink-soft);
+	background: var(--surface);
+	border-left: 3px solid var(--accent);
+	padding: .85rem 1.1rem;
+	margin: 0 0 2rem;
+}
+
+/* creditos - a atribuicao e obrigatoria, entao tem peso visual proprio */
+.sources { border-top: 2px solid var(--ink); padding-top: 1.1rem; }
+.sources ol { list-style: none; margin: .8rem 0 0; padding: 0; display: flex; flex-direction: column; gap: .7rem; }
+.sources li {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+	align-items: baseline;
+	padding-bottom: .7rem;
+	border-bottom: 1px solid var(--rule);
+}
+.sources li:last-child { border-bottom: none; padding-bottom: 0; }
+.sources .name { font-weight: 600; font-size: .95rem; }
+.sources .go {
+	font-family: var(--mono);
+	font-size: .74rem;
+	color: var(--accent);
+	white-space: nowrap;
+}
+.sources .go:hover { text-decoration: underline; }
+
+/* ============ chips de topico e entidade ============ */
+
+.chips { display: flex; flex-wrap: wrap; gap: .4rem; }
+.chip {
+	font-family: var(--mono);
+	font-size: .71rem;
+	letter-spacing: .05em;
+	padding: .22rem .55rem;
+	border: 1px solid var(--rule-strong);
+	border-radius: 99px;
+	color: var(--ink-soft);
+}
+.chip:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ============ cabecalho de hub e topico ============ */
+
+.page-head {
+	padding-bottom: 1.4rem;
+	margin-bottom: 1.8rem;
+	border-bottom: 2px solid var(--ink);
+}
+.page-head .kicker {
+	font-family: var(--mono);
+	font-size: .73rem;
+	letter-spacing: .15em;
+	text-transform: uppercase;
+	color: var(--ink-faint);
+}
+.page-head h1 {
+	font-family: var(--serif);
+	font-size: clamp(1.8rem, 4vw, 2.5rem);
+	font-weight: 700;
+	line-height: 1.1;
+	margin: .3rem 0 .4rem;
+	letter-spacing: -.015em;
+}
+.page-head p { margin: 0; color: var(--ink-soft); max-width: 60ch; }
+
+/* ============ carregar mais ============ */
+
+.load-more { display: flex; justify-content: center; padding: 2.5rem 0 .5rem; }
+.load-more button {
+	font-family: var(--mono);
+	font-size: .78rem;
+	letter-spacing: .08em;
+	text-transform: uppercase;
+	background: transparent;
+	color: var(--ink-soft);
+	border: 1px solid var(--rule-strong);
+	padding: .6rem 1.6rem;
+	border-radius: 3px;
+	cursor: pointer;
+}
+.load-more button:hover:not(:disabled) { color: var(--ink); border-color: var(--accent); }
+.load-more button:disabled { opacity: .55; cursor: progress; }
+
+/* ============ vazio e rodape ============ */
+
+.empty {
+	border: 1px dashed var(--rule-strong);
+	padding: 2.5rem 1.5rem;
+	text-align: center;
+	color: var(--ink-faint);
+	font-size: .95rem;
+}
+
+.site-footer {
+	border-top: 1px solid var(--rule);
+	padding: 1.6rem 0 2.5rem;
+	font-family: var(--mono);
+	font-size: .73rem;
+	color: var(--ink-faint);
+	line-height: 1.8;
+}
+.site-footer a { color: var(--accent); }
+.site-footer a:hover { text-decoration: underline; }
+
+@media (prefers-reduced-motion: reduce) {
+	*, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}

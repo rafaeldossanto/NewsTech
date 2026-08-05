@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!--
+	Fragments de peca reutilizados pela home, pelas paginas de topico e pelos hubs.
+	A atribuicao aparece em todos: e regra do produto que nenhuma peca circule sem
+	dizer de onde veio.
+-->
+
+<!-- Linha de metadados: fonte, horario e, quando for o caso, o selo de manchete. -->
+<div th:fragment="meta(story)" class="meta">
+	<span class="src" th:text="${story.mainSourceName}">Fonte</span>
+	<span class="sep">/</span>
+	<time th:datetime="${story.publishedAtIso}" th:text="${story.relativeTime}">há 2h</time>
+	<th:block th:if="${story.sourceCount > 1}">
+		<span class="sep">/</span>
+		<span th:text="${story.sourceCount} + ' fontes'">3 fontes</span>
+	</th:block>
+	<span th:if="${story.headliner}" class="flag">manchete</span>
+</div>
+
+<!--
+	Variante sem horario, para o radar: ali o tempo ja e a primeira coluna da linha,
+	e repeti-lo logo ao lado so gera ruido.
+-->
+<div th:fragment="metaSource(story)" class="meta">
+	<span class="src" th:text="${story.mainSourceName}">Fonte</span>
+	<th:block th:if="${story.sourceCount > 1}">
+		<span class="sep">/</span>
+		<span th:text="${story.sourceCount} + ' fontes'">3 fontes</span>
+	</th:block>
+	<span th:if="${story.headliner}" class="flag">manchete</span>
+</div>
+
+<!-- Chamada principal da home. -->
+<article th:fragment="lead(story)" class="lead-story">
+	<div th:replace="~{fragments/story :: meta(${story})}"></div>
+	<h2><a th:href="@{'/n/' + ${story.slug}}" th:text="${story.headline}">Manchete</a></h2>
+	<p class="summary" th:text="${story.summary}">Resumo</p>
+	<p class="angle" th:if="${story.angle}" th:text="${story.angle}">Por que importa</p>
+</article>
+
+<!-- Faixa de destaques ao lado da manchete. -->
+<article th:fragment="highlight(story)" class="highlight">
+	<div th:replace="~{fragments/story :: meta(${story})}"></div>
+	<h3><a th:href="@{'/n/' + ${story.slug}}" th:text="${story.headline}">Destaque</a></h3>
+	<p th:text="${story.summary}">Resumo</p>
+</article>
+
+<!-- Linha compacta do radar: o grosso do volume vive aqui. -->
+<article th:fragment="radar(story)" class="radar-item">
+	<span class="when" th:text="${story.relativeTime}">há 2h</span>
+	<div>
+		<h3><a th:href="@{'/n/' + ${story.slug}}" th:text="${story.headline}">Título</a></h3>
+	</div>
+	<div class="line">
+		<div th:replace="~{fragments/story :: metaSource(${story})}"></div>
+	</div>
+</article>
+
+<!-- Card usado nas grades de topico e de entidade. -->
+<article th:fragment="card(story)" class="card">
+	<div th:replace="~{fragments/story :: meta(${story})}"></div>
+	<h3><a th:href="@{'/n/' + ${story.slug}}" th:text="${story.headline}">Título</a></h3>
+	<p th:text="${story.summary}">Resumo</p>
+</article>
+
+</body>
+</html>

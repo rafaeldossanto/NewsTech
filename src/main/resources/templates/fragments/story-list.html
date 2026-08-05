@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!--
+	Pagina de cards devolvida ao "carregar mais". E o mesmo fragmento usado na
+	primeira renderizacao, entao a pagina 2 sai identica a pagina 1 - sem um
+	segundo caminho de montagem que possa divergir com o tempo.
+-->
+<!--
+	Le `stories` direto do model, sem parametro: quando o fragmento e devolvido como
+	view name pelo controller, o Thymeleaf exige parametro nomeado na assinatura, e
+	nao ha ganho nenhum em carregar essa cerimonia aqui.
+-->
+<th:block th:fragment="page">
+	<th:block th:each="s : ${stories}">
+		<div th:replace="~{fragments/story :: card(${s})}"></div>
+	</th:block>
+</th:block>
+
+</body>
+</html>

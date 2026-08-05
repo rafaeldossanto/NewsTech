@@ -1,0 +1,254 @@
+[
+  {
+    "slug": "claude-disponivel-no-brasil",
+    "headline": "Claude chega oficialmente ao Brasil",
+    "summary": "A Anthropic liberou o acesso ao Claude no Brasil, que até então dependia de contorno para uso local. O anúncio inclui suporte a pagamento e cobrança em condições locais.",
+    "angle": "Fim da barreira de acesso para quem desenvolve no país: dá para assinar e faturar sem intermediário.",
+    "importance": "MANCHETE",
+    "hoursAgo": 3,
+    "topics": ["ia", "llm", "empresas"],
+    "entities": ["anthropic"],
+    "sources": [
+      { "sourceName": "Anthropic", "sourceUrl": "https://www.anthropic.com", "articleUrl": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE5YWVpfZVpPWFhiNmR6SzdTaXZlS2FCeUR0dHdDd0pPME5TeEJRZUpCanZNeXNqM2NRcHJrcDNuMENqWVNCZWZCYXROblhrM1E5TldBaVNPMA?oc=5" }
+    ]
+  },
+  {
+    "slug": "anthropic-apresenta-cowork",
+    "headline": "Anthropic apresenta o Cowork, sua aposta em IA no ambiente de trabalho",
+    "summary": "A empresa detalhou o Cowork, produto voltado a tarefas de trabalho em vez de conversa avulsa. A proposta é o modelo operar dentro do fluxo da equipe, com acesso ao contexto do que já está em andamento.",
+    "angle": "Segue a tendência de sair do chat isolado e virar ferramenta acoplada ao trabalho real.",
+    "importance": "DESTAQUE",
+    "hoursAgo": 7,
+    "topics": ["ia", "llm", "empresas"],
+    "entities": ["anthropic"],
+    "sources": [
+      { "sourceName": "Anthropic", "sourceUrl": "https://www.anthropic.com", "articleUrl": "https://news.google.com/rss/articles/CBMif0FVX3lxTE5ITGlWNmVvS3ZlMlp3QU5MS2tCOFpJWHhENFRfMzY0b3NIZWpCdkxvWEZRM1NGbmRtOUR3SEl6dkZRaWZRQXJneDZENTJ1eEtyN0tjVGpCam4tUWhsSUxEYmsySnVfaXhNNlZVYTNxaEZmSktnUWRNNUhkWm9XV2M?oc=5" }
+    ]
+  },
+  {
+    "slug": "texas-suspende-conexao-data-centers",
+    "headline": "Texas suspende novas conexões de data centers à rede elétrica",
+    "summary": "O estado interrompeu a autorização de novas ligações de data centers ao grid diante de uma demanda que passou do que a rede comporta. A medida atinge diretamente os planos de expansão de infraestrutura de IA.",
+    "angle": "O gargalo do treino de modelos deixou de ser GPU e passou a ser energia — e agora é decisão regulatória, não de engenharia.",
+    "importance": "DESTAQUE",
+    "hoursAgo": 5,
+    "topics": ["hardware", "ia", "empresas"],
+    "entities": [],
+    "sources": [
+      { "sourceName": "Ars Technica", "sourceUrl": "https://arstechnica.com", "articleUrl": "https://arstechnica.com/ai/2026/08/texas-halts-data-center-connections-to-power-grid-amid-overwhelming-demand/" },
+      { "sourceName": "The Register", "sourceUrl": "https://www.theregister.com", "articleUrl": "https://www.theregister.com/systems/2026/07/31/uk-wants-datacenters-to-pay-a-fee-for-grid-connection-requests/" }
+    ]
+  },
+  {
+    "slug": "apps-android-vazam-localizacao-anunciantes",
+    "headline": "Apps Android podem estar enviando localização de usuários a anunciantes sem saber",
+    "summary": "Uma investigação aponta que SDKs de publicidade embarcados em apps Android coletam dados de localização sem que quem desenvolveu o app tenha noção disso. O repasse acontece por bibliotecas de terceiros incluídas para monetização.",
+    "angle": "O risco não está no código do app, e sim na dependência que ninguém leu — o mesmo padrão dos incidentes de cadeia de suprimentos.",
+    "importance": "DESTAQUE",
+    "hoursAgo": 9,
+    "topics": ["seguranca", "empresas"],
+    "entities": ["google"],
+    "sources": [
+      { "sourceName": "TechCrunch", "sourceUrl": "https://techcrunch.com", "articleUrl": "https://techcrunch.com/2026/08/04/android-app-developers-may-be-unwittingly-sharing-their-users-location-data-with-advertisers/" }
+    ]
+  },
+  {
+    "slug": "dependabot-periodo-de-espera",
+    "headline": "Dependabot passa a esperar antes de sugerir atualização de versão",
+    "summary": "O GitHub introduziu um período de carência entre a publicação de uma versão e a abertura do PR de atualização. A ideia é que pacotes comprometidos costumam ser detectados e removidos nas primeiras horas.",
+    "angle": "Atualizar na hora deixou de ser a prática mais segura: esperar um pouco vira defesa contra ataque à cadeia de suprimentos.",
+    "importance": "DESTAQUE",
+    "hoursAgo": 14,
+    "topics": ["seguranca", "open-source", "frameworks"],
+    "entities": ["github"],
+    "sources": [
+      { "sourceName": "GitHub Blog", "sourceUrl": "https://github.blog", "articleUrl": "https://github.blog/security/supply-chain-security/the-case-for-a-cooldown-why-dependabot-now-waits-before-issuing-version-updates/" }
+    ]
+  },
+  {
+    "slug": "dez-anos-de-alphago",
+    "headline": "DeepMind revisita dez anos de AlphaGo e o que veio depois",
+    "summary": "O laboratório publicou um balanço da década desde o AlphaGo, ligando as técnicas daquele sistema ao que hoje se usa em biologia e matemática. O texto traça a linha entre o marco no Go e o AlphaFold.",
+    "angle": "Útil como mapa de como aprendizado por reforço saiu do tabuleiro e chegou à pesquisa científica.",
+    "importance": "RADAR",
+    "hoursAgo": 11,
+    "topics": ["ia", "pesquisa"],
+    "entities": ["deepmind", "google"],
+    "sources": [
+      { "sourceName": "Google DeepMind", "sourceUrl": "https://deepmind.google", "articleUrl": "https://deepmind.google/blog/10-years-of-alphago/" }
+    ]
+  },
+  {
+    "slug": "google-40m-genesis-mission",
+    "headline": "Google destina US$ 40 milhões à Genesis Mission",
+    "summary": "O compromisso financia uso de IA em pesquisa científica de fronteira, com foco em acelerar descobertas experimentais. O aporte cobre parcerias com instituições de pesquisa.",
+    "importance": "RADAR",
+    "hoursAgo": 16,
+    "topics": ["pesquisa", "ia", "empresas"],
+    "entities": ["google", "deepmind"],
+    "sources": [
+      { "sourceName": "Google DeepMind", "sourceUrl": "https://deepmind.google", "articleUrl": "https://deepmind.google/blog/accelerating-the-frontiers-of-scientific-discovery-googles-40m-commitment-to-the-genesis-mission/" }
+    ]
+  },
+  {
+    "slug": "gpus-ociosas-custo",
+    "headline": "GPU parada é o novo avião no chão, e a conta aparece rápido",
+    "summary": "Uma análise compara cluster de GPU ocioso a frota aérea parada: o custo corre independentemente do uso. O texto detalha por que a taxa de ocupação importa mais que a capacidade instalada.",
+    "angle": "Boa referência para quem dimensiona infraestrutura própria em vez de pagar por chamada de API.",
+    "importance": "RADAR",
+    "hoursAgo": 19,
+    "topics": ["hardware", "ia"],
+    "entities": ["hugging-face", "nvidia"],
+    "sources": [
+      { "sourceName": "Hugging Face", "sourceUrl": "https://huggingface.co", "articleUrl": "https://huggingface.co/blog/Dharma-AI/gpu-management" }
+    ]
+  },
+  {
+    "slug": "reddit-questiona-ai-overviews",
+    "headline": "CEO do Reddit questiona o valor dos AI Overviews do Google",
+    "summary": "Com a ação em queda, o executivo afirmou publicamente que ainda procura o benefício mútuo na relação com a busca do Google. A crítica é ao resumo por IA que responde sem gerar visita ao site de origem.",
+    "angle": "É a tensão central de quem produz conteúdo na web hoje: virar insumo de modelo sem receber o tráfego.",
+    "importance": "RADAR",
+    "hoursAgo": 22,
+    "topics": ["empresas", "ia"],
+    "entities": ["reddit", "google"],
+    "sources": [
+      { "sourceName": "Ars Technica", "sourceUrl": "https://arstechnica.com", "articleUrl": "https://arstechnica.com/ai/2026/08/reddit-ceo-on-ai-overviews-were-still-looking-for-that-win-win/" }
+    ]
+  },
+  {
+    "slug": "apple-openai-dados-confidenciais",
+    "headline": "Apple diz que mais ex-funcionários podem ter levado dados à OpenAI",
+    "summary": "A empresa ampliou a acusação de que material confidencial saiu com pessoas que migraram para a OpenAI. O caso corre na esfera judicial e envolve mais nomes do que se sabia.",
+    "importance": "RADAR",
+    "hoursAgo": 25,
+    "topics": ["empresas"],
+    "entities": ["apple", "openai"],
+    "sources": [
+      { "sourceName": "TechCrunch", "sourceUrl": "https://techcrunch.com", "articleUrl": "https://techcrunch.com/2026/08/04/apple-says-more-ex-employees-may-have-taken-confidential-data-to-openai/" }
+    ]
+  },
+  {
+    "slug": "copilot-versus-api-direta",
+    "headline": "Copilot ou API direta: o que se paga em cada caso",
+    "summary": "O GitHub detalhou o que está incluso na assinatura do Copilot em comparação ao acesso cru à API do modelo. A diferença está no ferramental em volta — indexação de repositório, contexto e integração — e não no modelo em si.",
+    "angle": "Ajuda a decidir entre assinar a ferramenta pronta ou montar a própria camada sobre a API.",
+    "importance": "RADAR",
+    "hoursAgo": 28,
+    "topics": ["ia", "frameworks", "empresas"],
+    "entities": ["github", "microsoft"],
+    "sources": [
+      { "sourceName": "GitHub Blog", "sourceUrl": "https://github.blog", "articleUrl": "https://github.blog/ai-and-ml/github-copilot/copilot-vs-raw-api-access-what-are-you-actually-paying-for/" }
+    ]
+  },
+  {
+    "slug": "rust-1-94",
+    "headline": "Rust 1.94 sai com melhorias de compilação",
+    "summary": "A nova versão estável traz ajustes no compilador e estabiliza APIs que estavam em fase de teste. O ciclo de seis semanas foi mantido.",
+    "importance": "RADAR",
+    "hoursAgo": 30,
+    "topics": ["linguagens", "open-source"],
+    "entities": [],
+    "sources": [
+      { "sourceName": "Rust", "sourceUrl": "https://github.com/rust-lang/rust", "articleUrl": "https://github.com/rust-lang/rust/releases/tag/1.94.0" }
+    ]
+  },
+  {
+    "slug": "openjdk-27-build-32",
+    "headline": "OpenJDK 27 chega ao build 32 rumo à versão final",
+    "summary": "O build de acesso antecipado do JDK 27 saiu, mantendo a cadência semanal antes do congelamento de features. É a janela para testar aplicações contra a próxima versão.",
+    "importance": "RADAR",
+    "hoursAgo": 33,
+    "topics": ["linguagens", "open-source"],
+    "entities": [],
+    "sources": [
+      { "sourceName": "OpenJDK", "sourceUrl": "https://github.com/openjdk/jdk", "articleUrl": "https://github.com/openjdk/jdk/releases/tag/jdk-27%2B32" }
+    ]
+  },
+  {
+    "slug": "python-3-14-6",
+    "headline": "Python 3.14.6 corrige falhas da série estável",
+    "summary": "A versão de manutenção reúne correções acumuladas desde a 3.14.5. Não há mudança de comportamento esperada para quem já está na série.",
+    "importance": "ARQUIVO",
+    "hoursAgo": 36,
+    "topics": ["linguagens", "open-source"],
+    "entities": [],
+    "sources": [
+      { "sourceName": "CPython", "sourceUrl": "https://github.com/python/cpython", "articleUrl": "https://github.com/python/cpython/releases/tag/v3.14.6" }
+    ]
+  },
+  {
+    "slug": "spring-boot-3-5-16",
+    "headline": "Spring Boot 3.5.16 sai com correções de dependências",
+    "summary": "A versão de manutenção da linha 3.5 atualiza dependências transitivas e corrige defeitos reportados. A linha 4.0 segue em paralelo com sua própria cadência.",
+    "importance": "ARQUIVO",
+    "hoursAgo": 39,
+    "topics": ["frameworks", "open-source"],
+    "entities": [],
+    "sources": [
+      { "sourceName": "Spring Boot", "sourceUrl": "https://github.com/spring-projects/spring-boot", "articleUrl": "https://github.com/spring-projects/spring-boot/releases/tag/v3.5.16" }
+    ]
+  },
+  {
+    "slug": "avancos-matematica-computacao-teorica",
+    "headline": "Dez avanços recentes em matemática e computação teórica",
+    "summary": "Uma compilação reúne resultados do período em áreas que costumam demorar a chegar ao noticiário técnico. Vários envolvem assistência de modelos na etapa de exploração.",
+    "angle": "Sinal concreto de onde a IA já entra em pesquisa formal, além do discurso.",
+    "importance": "RADAR",
+    "hoursAgo": 42,
+    "topics": ["pesquisa", "ia"],
+    "entities": [],
+    "sources": [
+      { "sourceName": "Simon Willison", "sourceUrl": "https://simonwillison.net", "articleUrl": "https://simonwillison.net/2026/Aug/1/ten-advances-in-mathematics/" }
+    ]
+  },
+  {
+    "slug": "soberania-digital-compra-corporativa",
+    "headline": "Soberania de dados entra no requisito de compra desde o início, diz Forrester",
+    "summary": "Levantamento da consultoria aponta que compradores corporativos passaram a exigir garantias de jurisdição já na primeira etapa da negociação. Antes o tema aparecia só na revisão jurídica.",
+    "angle": "Muda o desenho de arquitetura: onde o dado roda vira requisito técnico, não cláusula de contrato.",
+    "importance": "RADAR",
+    "hoursAgo": 46,
+    "topics": ["empresas", "seguranca"],
+    "entities": [],
+    "sources": [
+      { "sourceName": "The Register", "sourceUrl": "https://www.theregister.com", "articleUrl": "https://www.theregister.com/ai-and-ml/2026/07/31/tech-buyers-are-baking-in-sovereignty-from-day-one-says-forrester/" }
+    ]
+  },
+  {
+    "slug": "especializacao-de-modelos",
+    "headline": "Por que a especialização de modelos é inevitável",
+    "summary": "O argumento é que modelos gerais perdem para modelos ajustados a domínio conforme a tarefa fica específica. O texto trata de custo por tarefa, não apenas de qualidade de resposta.",
+    "importance": "ARQUIVO",
+    "hoursAgo": 50,
+    "topics": ["llm", "ia"],
+    "entities": ["hugging-face"],
+    "sources": [
+      { "sourceName": "Hugging Face", "sourceUrl": "https://huggingface.co", "articleUrl": "https://huggingface.co/blog/Dharma-AI/why-specialization-is-inevitable" }
+    ]
+  },
+  {
+    "slug": "case-folding-em-velocidade-de-memoria",
+    "headline": "GitHub detalha como faz case-folding de código na velocidade da memória",
+    "summary": "A engenharia da empresa explicou a otimização usada para normalizar maiúsculas e minúsculas em busca de código sem virar gargalo. O texto entra no detalhe de por que a parada antecipada atrapalha.",
+    "importance": "ARQUIVO",
+    "hoursAgo": 54,
+    "topics": ["frameworks", "open-source"],
+    "entities": ["github"],
+    "sources": [
+      { "sourceName": "GitHub Blog", "sourceUrl": "https://github.blog", "articleUrl": "https://github.blog/engineering/architecture-optimization/dont-stop-early-case-folding-source-code-at-memory-speed/" }
+    ]
+  },
+  {
+    "slug": "openai-scorecard-era-ia",
+    "headline": "OpenAI propõe um placar para medir a era da IA",
+    "summary": "A empresa publicou um conjunto de indicadores para acompanhar o efeito da tecnologia além de benchmark de modelo. A proposta inclui métricas de adoção e de impacto econômico.",
+    "importance": "RADAR",
+    "hoursAgo": 58,
+    "topics": ["ia", "empresas"],
+    "entities": ["openai"],
+    "sources": [
+      { "sourceName": "OpenAI", "sourceUrl": "https://openai.com", "articleUrl": "https://openai.com/index/a-scorecard-for-the-ai-age" }
+    ]
+  }
+]

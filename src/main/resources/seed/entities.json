@@ -1,0 +1,15 @@
+[
+  { "slug": "anthropic",    "name": "Anthropic",    "type": "COMPANY", "aliases": ["Anthropic", "@AnthropicAI", "Claude"],                    "description": "Laboratório de IA responsável pelo Claude." },
+  { "slug": "openai",       "name": "OpenAI",       "type": "COMPANY", "aliases": ["OpenAI", "@OpenAI", "ChatGPT", "GPT"],                    "description": "Laboratório de IA responsável pelo ChatGPT e pelos modelos GPT." },
+  { "slug": "google",       "name": "Google",       "type": "COMPANY", "aliases": ["Google", "Alphabet", "Gemini"],                           "description": "Busca, nuvem e a família de modelos Gemini." },
+  { "slug": "deepmind",     "name": "Google DeepMind", "type": "COMPANY", "aliases": ["DeepMind", "Google DeepMind", "AlphaGo", "AlphaFold"], "description": "Braço de pesquisa em IA do Google." },
+  { "slug": "meta",         "name": "Meta",         "type": "COMPANY", "aliases": ["Meta", "Facebook", "Llama"],                              "description": "Dona do Facebook e da família Llama." },
+  { "slug": "microsoft",    "name": "Microsoft",    "type": "COMPANY", "aliases": ["Microsoft", "Azure"],                                     "description": "Nuvem Azure, Windows e parceria com a OpenAI." },
+  { "slug": "github",       "name": "GitHub",       "type": "COMPANY", "aliases": ["GitHub", "Copilot", "Dependabot"],                        "description": "Hospedagem de código e ferramentas para quem desenvolve." },
+  { "slug": "nvidia",       "name": "Nvidia",       "type": "COMPANY", "aliases": ["Nvidia", "NVIDIA", "CUDA"],                               "description": "GPUs e a infraestrutura de treino de modelos." },
+  { "slug": "mistral",      "name": "Mistral AI",   "type": "COMPANY", "aliases": ["Mistral", "Mistral AI"],                                  "description": "Laboratório francês de modelos abertos." },
+  { "slug": "moonshot",     "name": "Moonshot AI",  "type": "COMPANY", "aliases": ["Moonshot", "Moonshot AI", "Kimi", "Kimi K2"],             "description": "Laboratório chinês responsável pelo Kimi." },
+  { "slug": "hugging-face", "name": "Hugging Face", "type": "COMPANY", "aliases": ["Hugging Face", "HuggingFace"],                            "description": "Repositório de modelos abertos e ferramental de ML." },
+  { "slug": "apple",        "name": "Apple",        "type": "COMPANY", "aliases": ["Apple"],                                                  "description": "Hardware, sistemas e serviços." },
+  { "slug": "reddit",       "name": "Reddit",       "type": "COMPANY", "aliases": ["Reddit"],                                                 "description": "Rede de comunidades e fonte de dados de treino." }
+]

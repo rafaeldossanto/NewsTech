@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/base}">
+<head>
+	<title th:text="${pageTitle}">Empresa</title>
+</head>
+<body>
+
+<!--
+	O hub por empresa é o diferencial do nicho: quem quer acompanhar só a Anthropic
+	tem uma página cronológica dedicada, em vez de garimpar a home.
+-->
+<div layout:fragment="content">
+
+	<header class="page-head">
+		<div class="kicker">Acompanhando</div>
+		<h1 th:text="${entity.name}">Empresa</h1>
+		<p th:if="${entity.description}" th:text="${entity.description}">Descrição</p>
+	</header>
+
+	<div class="radar" th:if="${!stories.isEmpty()}">
+		<th:block th:each="s : ${stories}">
+			<div th:replace="~{fragments/story :: radar(${s})}"></div>
+		</th:block>
+	</div>
+
+	<p class="empty" th:if="${stories.isEmpty()}">
+		Nada publicado sobre <span th:text="${entity.name}">esta empresa</span> ainda.
+	</p>
+
+</div>
+
+</body>
+</html>

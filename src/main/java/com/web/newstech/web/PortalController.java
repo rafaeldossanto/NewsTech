@@ -1,0 +1,175 @@
+package com.web.newstech.web;
+
+import com.web.newstech.content.Importance;
+import com.web.newstech.content.Story;
+import com.web.newstech.content.StoryRepository;
+import com.web.newstech.content.Topic;
+import com.web.newstech.content.TopicRepository;
+import com.web.newstech.content.TrackedEntity;
+import com.web.newstech.content.TrackedEntityRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+
+/**
+ * As paginas publicas do portal.
+ *
+ * <p>Renderizacao no servidor porque portal de noticia vive de SEO e de abrir rapido
+ * em conexao ruim - o HTML sai pronto e cacheavel.
+ */
+@Controller
+@RequiredArgsConstructor
+public class PortalController {
+
+	private static final int LIMITE_DESTAQUES = 4;
+	private static final int LIMITE_RADAR = 25;
+	private static final int PAGINA = 12;
+	private static final int LIMITE_LISTA = 40;
+	private static final int HORAS_DO_RADAR = 48;
+
+	private final StoryRepository storyRepository;
+	private final TopicRepository topicRepository;
+	private final TrackedEntityRepository entityRepository;
+
+	/** A navegacao por topicos aparece em toda pagina, entao vive no layout. */
+	@ModelAttribute("navTopics")
+	public List<Topic> navTopics() {
+		return topicRepository.findByActiveTrueOrderByDisplayOrderAsc();
+	}
+
+	@GetMapping("/")
+	public String home(Model model) {
+		List<Story> manchetes = storyRepository.findByImportanceOrderByPublishedAtDesc(
+				Importance.MANCHETE, PageRequest.of(0, 1));
+
+		List<Story> destaques = storyRepository.findByImportanceOrderByPublishedAtDesc(
+				Importance.DESTAQUE, PageRequest.of(0, LIMITE_DESTAQUES));
+
+		// O radar e cronologico e ignora importancia: e a leitura de "o que saiu hoje".
+		// A manchete e removida para nao aparecer duas vezes na mesma tela.
+		List<Story> radar = storyRepository.findByPublishedAtAfterOrderByPublishedAtDesc(
+						Instant.now().minus(HORAS_DO_RADAR, ChronoUnit.HOURS),
+						PageRequest.of(0, LIMITE_RADAR)).stream()
+				.filter(story -> manchetes.stream().noneMatch(m -> m.getSlug().equals(story.getSlug())))
+				.toList();
+
+		model.addAttribute("lead", manchetes.isEmpty() ? null : StoryView.from(manchetes.getFirst()));
+		model.addAttribute("highlights", StoryView.from(destaques));
+		model.addAttribute("radar", StoryView.from(radar));
+		return "home";
+	}
+
+	@GetMapping("/n/{slug}")
+	public String story(@PathVariable String slug, Model model) {
+		Story story = storyRepository.findBySlug(slug)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Peça não encontrada"));
+
+		StoryView view = StoryView.from(story);
+		model.addAttribute("story", view);
+		model.addAttribute("pageTitle", view.headline());
+		model.addAttribute("pageDescription", view.summary());
+		model.addAttribute("related", StoryView.from(relacionadas(story)));
+		model.addAttribute("topicChips", topicChips(view.topics()));
+		model.addAttribute("entityChips", entityChips(view.entities()));
+		return "story";
+	}
+
+	/**
+	 * A story guarda slugs, mas o leitor precisa ver nome: "Segurança", não "seguranca".
+	 * Slug sem cadastro correspondente é omitido - melhor não mostrar o chip do que
+	 * mostrar um rótulo cru que leva a lugar nenhum.
+	 */
+	private List<Chip> topicChips(List<String> slugs) {
+		return slugs.stream()
+				.flatMap(slug -> topicRepository.findBySlug(slug).stream())
+				.map(topic -> new Chip(topic.getSlug(), topic.getName(), "/" + topic.getSlug()))
+				.toList();
+	}
+
+	private List<Chip> entityChips(List<String> slugs) {
+		return slugs.stream()
+				.flatMap(slug -> entityRepository.findBySlug(slug).stream())
+				.map(entity -> new Chip(entity.getSlug(), entity.getName(), "/empresa/" + entity.getSlug()))
+				.toList();
+	}
+
+	public record Chip(String slug, String label, String href) {
+	}
+
+	@GetMapping("/empresa/{slug}")
+	public String entityHub(@PathVariable String slug, Model model) {
+		TrackedEntity entity = entityRepository.findBySlug(slug)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Empresa não acompanhada"));
+
+		model.addAttribute("entity", entity);
+		model.addAttribute("stories", StoryView.from(
+				storyRepository.findByEntitiesContainingOrderByPublishedAtDesc(slug, PageRequest.of(0, LIMITE_LISTA))));
+		model.addAttribute("pageTitle", entity.getName());
+		return "entity";
+	}
+
+	/**
+	 * Topico na raiz ({@code /ia}, {@code /seguranca}) porque a url e lida e compartilhada.
+	 * Como o padrao captura qualquer caminho de um segmento, um slug desconhecido precisa
+	 * virar 404 explicito - senao qualquer url errada renderizaria uma pagina vazia.
+	 */
+	@GetMapping("/{slug}")
+	public String topic(@PathVariable String slug, Model model) {
+		Topic topic = topicRepository.findBySlug(slug)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tópico não encontrado"));
+
+		List<Story> primeiraPagina =
+				storyRepository.findByTopicsContainingOrderByPublishedAtDesc(slug, PageRequest.of(0, PAGINA));
+
+		model.addAttribute("topic", topic);
+		model.addAttribute("activeTopic", slug);
+		model.addAttribute("stories", StoryView.from(primeiraPagina));
+		// So oferece o botao quando a primeira pagina veio cheia; lista curta nao ganha
+		// um controle que nao faz nada.
+		model.addAttribute("hasMore", primeiraPagina.size() == PAGINA);
+		model.addAttribute("pageTitle", topic.getName());
+		return "topic";
+	}
+
+	/**
+	 * Proxima pagina de cards de um topico, ja em HTML.
+	 *
+	 * <p>Devolve fragmento e nao JSON porque quem monta a peca e o servidor: manda o
+	 * markup pronto e o cliente so injeta. Assim nao existe uma segunda implementacao
+	 * do card em JavaScript para divergir da primeira.
+	 */
+	@GetMapping("/{slug}/pagina/{page}")
+	public String topicPage(@PathVariable String slug, @PathVariable int page, Model model) {
+		if (topicRepository.findBySlug(slug).isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tópico não encontrado");
+		}
+
+		model.addAttribute("stories", StoryView.from(
+				storyRepository.findByTopicsContainingOrderByPublishedAtDesc(
+						slug, PageRequest.of(Math.max(page, 0), PAGINA))));
+		return "fragments/story-list :: page";
+	}
+
+	/** Peças do mesmo tópico principal, sem repetir a que está aberta. */
+	private List<Story> relacionadas(Story story) {
+		if (story.getTopics().isEmpty()) {
+			return List.of();
+		}
+		return storyRepository.findByTopicsContainingOrderByPublishedAtDesc(
+						story.getTopics().getFirst(), PageRequest.of(0, 5)).stream()
+				.filter(outra -> !outra.getSlug().equals(story.getSlug()))
+				.limit(3)
+				.toList();
+	}
+
+}

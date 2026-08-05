@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/base}">
+<head>
+	<title th:text="${pageTitle}">Tópico</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+	<header class="page-head">
+		<div class="kicker">Tópico</div>
+		<h1 th:text="${topic.name}">Tópico</h1>
+		<p th:if="${topic.description}" th:text="${topic.description}">Descrição</p>
+	</header>
+
+	<div class="grid" id="storyGrid" th:if="${!stories.isEmpty()}">
+		<th:block th:each="s : ${stories}">
+			<div th:replace="~{fragments/story :: card(${s})}"></div>
+		</th:block>
+	</div>
+
+	<div class="load-more" th:if="${hasMore}">
+		<button type="button" id="loadMore" th:attr="data-topic=${topic.slug}">carregar mais</button>
+	</div>
+
+	<p class="empty" th:if="${stories.isEmpty()}">
+		Ainda não há peças publicadas neste tópico.
+	</p>
+
+</div>
+
+<!--
+	Busca a próxima página já renderizada pelo servidor e injeta na grade.
+	Sem framework: são poucas linhas e o markup do card continua vindo de um lugar só.
+-->
+<script layout:fragment="scripts" th:inline="none">
+	(function () {
+		var button = document.getElementById('loadMore');
+		var grid = document.getElementById('storyGrid');
+		if (!button || !grid) { return; }
+
+		var page = 1;
+
+		button.addEventListener('click', function () {
+			button.disabled = true;
+			button.textContent = 'carregando…';
+
+			fetch('/' + button.dataset.topic + '/pagina/' + page, { headers: { 'Accept': 'text/html' } })
+				.then(function (response) {
+					if (!response.ok) { throw new Error('falhou'); }
+					return response.text();
+				})
+				.then(function (html) {
+					var trimmed = html.trim();
+					if (!trimmed) {
+						// Acabou o conteúdo: o controle some em vez de ficar clicável sem efeito.
+						button.remove();
+						return;
+					}
+					grid.insertAdjacentHTML('beforeend', trimmed);
+					page += 1;
+					button.disabled = false;
+					button.textContent = 'carregar mais';
+				})
+				.catch(function () {
+					button.disabled = false;
+					button.textContent = 'não deu para carregar — tentar de novo';
+				});
+		});
+	})();
+</script>
+
+</body>
+</html>

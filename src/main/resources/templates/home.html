@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/base}">
+<head>
+	<title>O que aconteceu em tecnologia</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+	<!-- Manchete e destaques dividem a mesma faixa: a hierarquia editorial precisa
+	     ser lida antes de qualquer rolagem. -->
+	<section class="lead" th:if="${lead}">
+		<div th:replace="~{fragments/story :: lead(${lead})}"></div>
+
+		<div>
+			<h2 class="section-label">Destaques</h2>
+			<!--
+				th:each vai no th:block externo, nunca no mesmo elemento do th:replace:
+				a inclusão de fragmento tem precedência maior que a iteração, então no
+				mesmo elemento o fragmento seria montado antes de a variável existir.
+			-->
+			<div class="highlights">
+				<th:block th:each="s : ${highlights}">
+					<div th:replace="~{fragments/story :: highlight(${s})}"></div>
+				</th:block>
+			</div>
+		</div>
+	</section>
+
+	<!-- Sem manchete o portal ainda funciona: os destaques sobem para o topo. -->
+	<section th:unless="${lead}">
+		<h2 class="section-label">Destaques</h2>
+		<div class="grid" th:if="${!highlights.isEmpty()}">
+			<th:block th:each="s : ${highlights}">
+				<div th:replace="~{fragments/story :: card(${s})}"></div>
+			</th:block>
+		</div>
+		<p class="empty" th:if="${highlights.isEmpty()}">
+			Nenhuma peça publicada ainda. A coleta já roda; falta o estágio editorial entrar no ar.
+		</p>
+	</section>
+
+	<section>
+		<h2 class="section-label">
+			Radar
+			<span class="count" th:text="'últimas 48h · ' + ${#lists.size(radar)}">últimas 48h</span>
+		</h2>
+
+		<div class="radar" th:if="${!radar.isEmpty()}">
+			<th:block th:each="s : ${radar}">
+				<div th:replace="~{fragments/story :: radar(${s})}"></div>
+			</th:block>
+		</div>
+
+		<p class="empty" th:if="${radar.isEmpty()}">Nada novo nas últimas 48 horas.</p>
+	</section>
+
+</div>
+
+</body>
+</html>

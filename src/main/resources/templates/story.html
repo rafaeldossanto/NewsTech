@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/base}">
+<head>
+	<title th:text="${pageTitle}">Peça</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+	<article class="article">
+		<div th:replace="~{fragments/story :: meta(${story})}"></div>
+
+		<h1 th:text="${story.headline}">Manchete</h1>
+		<p class="summary" th:text="${story.summary}">Resumo</p>
+		<p class="angle" th:if="${story.angle}" th:text="${story.angle}">Por que importa</p>
+
+		<!--
+			Os créditos não são rodapé: são a razão de a peça poder existir.
+			O resumo acima é texto próprio; o conteúdo original pertence a quem publicou,
+			e o leitor precisa de um caminho direto até lá.
+		-->
+		<section class="sources">
+			<h2 class="section-label" style="border-bottom:none;padding-bottom:0;margin-bottom:0">
+				<span th:text="${story.sourceCount > 1} ? 'Fontes' : 'Fonte'">Fonte</span>
+			</h2>
+			<ol>
+				<li th:each="src : ${story.sources}">
+					<span class="name" th:text="${src.sourceName}">Fonte</span>
+					<a class="go" th:href="${src.articleUrl}" target="_blank" rel="noopener noreferrer nofollow">
+						ler no original &rarr;
+					</a>
+				</li>
+			</ol>
+		</section>
+
+		<div style="display:flex;flex-direction:column;gap:.8rem;margin-top:2rem">
+			<div class="chips" th:if="${!topicChips.isEmpty()}">
+				<a class="chip" th:each="c : ${topicChips}" th:href="@{${c.href}}" th:text="${c.label}">tópico</a>
+			</div>
+			<div class="chips" th:if="${!entityChips.isEmpty()}">
+				<a class="chip" th:each="c : ${entityChips}" th:href="@{${c.href}}" th:text="${c.label}">empresa</a>
+			</div>
+		</div>
+	</article>
+
+	<section th:if="${!related.isEmpty()}" style="margin-top:3.5rem">
+		<h2 class="section-label">Relacionadas</h2>
+		<div class="grid">
+			<th:block th:each="s : ${related}">
+				<div th:replace="~{fragments/story :: card(${s})}"></div>
+			</th:block>
+		</div>
+	</section>
+
+</div>
+
+</body>
+</html>

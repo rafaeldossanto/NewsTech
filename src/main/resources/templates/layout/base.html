@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title layout:title-pattern="$CONTENT_TITLE · NewsTech">NewsTech</title>
+	<meta name="description" th:content="${pageDescription} ?: 'O que aconteceu em tecnologia, sem o ruído. IA, linguagens de programação e as empresas do setor.'">
+	<link rel="stylesheet" th:href="@{/css/newstech.css}">
+	<script>
+		// Aplicado antes da pintura para nao piscar o tema claro em quem usa escuro.
+		(function () {
+			var saved = null;
+			try { saved = localStorage.getItem('newstech-theme'); } catch (e) { /* modo restrito */ }
+			if (saved) { document.documentElement.setAttribute('data-theme', saved); }
+		})();
+	</script>
+</head>
+<body>
+
+<header class="site-header">
+	<div class="shell bar">
+		<a class="wordmark" th:href="@{/}">News<em>Tech</em></a>
+
+		<nav class="site-nav" th:if="${navTopics}">
+			<a th:each="t : ${navTopics}"
+			   th:href="@{'/' + ${t.slug}}"
+			   th:text="${t.name}"
+			   th:classappend="${t.slug == activeTopic} ? 'on' : ''">Tópico</a>
+		</nav>
+
+		<button class="theme-toggle" type="button" id="themeToggle" aria-label="Alternar tema claro e escuro">tema</button>
+	</div>
+</header>
+
+<main class="shell">
+	<div layout:fragment="content">conteúdo</div>
+</main>
+
+<footer class="site-footer">
+	<div class="shell">
+		<p>
+			NewsTech agrega manchetes de tecnologia e publica resumos próprios com link e crédito
+			à fonte original. O texto integral pertence a quem o publicou — para ler a matéria
+			completa, siga sempre o link da fonte.
+		</p>
+		<p><a th:href="@{/}">início</a> · <a th:href="@{/admin/sources}">admin</a></p>
+	</div>
+</footer>
+
+<script>
+	(function () {
+		var toggle = document.getElementById('themeToggle');
+		if (!toggle) { return; }
+		toggle.addEventListener('click', function () {
+			var root = document.documentElement;
+			var current = root.getAttribute('data-theme');
+			if (!current) {
+				// Sem escolha salva: parte do que o sistema pede e inverte.
+				current = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+			}
+			var next = current === 'dark' ? 'light' : 'dark';
+			root.setAttribute('data-theme', next);
+			try { localStorage.setItem('newstech-theme', next); } catch (e) { /* modo restrito */ }
+		});
+	})();
+</script>
+
+<!-- Ponto de extensao para o script proprio de cada pagina. -->
+<th:block layout:fragment="scripts"></th:block>
+
+</body>
+</html>

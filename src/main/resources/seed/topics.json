@@ -1,0 +1,11 @@
+[
+  { "slug": "ia",          "name": "IA",          "displayOrder": 1, "description": "Inteligência artificial aplicada: produtos, capacidades e impacto." },
+  { "slug": "llm",         "name": "LLMs",        "displayOrder": 2, "description": "Modelos de linguagem: lançamentos, benchmarks, custo e comportamento." },
+  { "slug": "linguagens",  "name": "Linguagens",  "displayOrder": 3, "description": "Linguagens de programação e suas versões." },
+  { "slug": "frameworks",  "name": "Frameworks",  "displayOrder": 4, "description": "Bibliotecas e frameworks que mudam o dia a dia de quem desenvolve." },
+  { "slug": "empresas",    "name": "Empresas",    "displayOrder": 5, "description": "Movimentos das empresas que definem o setor." },
+  { "slug": "seguranca",   "name": "Segurança",   "displayOrder": 6, "description": "Vulnerabilidades, cadeia de suprimentos e privacidade." },
+  { "slug": "open-source", "name": "Open Source", "displayOrder": 7, "description": "Projetos abertos, licenciamento e comunidade." },
+  { "slug": "pesquisa",    "name": "Pesquisa",    "displayOrder": 8, "description": "Papers e avanços científicos com efeito prático." },
+  { "slug": "hardware",    "name": "Hardware",    "displayOrder": 9, "description": "GPUs, data centers e a infraestrutura física da computação." }
+]
