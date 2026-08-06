@@ -115,7 +115,7 @@ public class ContentSeeder implements InitializingBean {
 	record TopicSeed(String slug, String name, int displayOrder, String description) {
 	}
 
-	record EntitySeed(String slug, String name, TrackedEntity.EntityType type, List<String> aliases,
+	record EntitySeed(String slug, String name, EntityType type, List<String> aliases,
 					  String description) {
 	}
 

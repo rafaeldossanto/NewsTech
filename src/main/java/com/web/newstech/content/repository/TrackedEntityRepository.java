@@ -1,5 +1,6 @@
 package com.web.newstech.content.repository;
 
+import com.web.newstech.content.EntityType;
 import com.web.newstech.content.TrackedEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -16,6 +17,6 @@ public interface TrackedEntityRepository extends MongoRepository<TrackedEntity, 
 	 */
 	Optional<TrackedEntity> findByAliasesContainingIgnoreCase(String alias);
 
-	List<TrackedEntity> findByType(TrackedEntity.EntityType type);
+	List<TrackedEntity> findByType(EntityType type);
 
 }

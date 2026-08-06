@@ -2,9 +2,9 @@ package com.web.newstech.curation.cluster;
 
 import com.web.newstech.TestcontainersConfiguration;
 import com.web.newstech.ingest.RawItem;
-import com.web.newstech.ingest.RawItemRepository;
-import com.web.newstech.ingest.RawItemStatus;
-import com.web.newstech.ingest.Triage;
+import com.web.newstech.ingest.enums.RawItemStatus;
+import com.web.newstech.ingest.model.Triage;
+import com.web.newstech.ingest.repository.RawItemRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

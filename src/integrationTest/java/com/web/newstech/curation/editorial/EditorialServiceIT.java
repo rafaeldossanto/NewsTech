@@ -6,13 +6,13 @@ import com.web.newstech.content.Story;
 import com.web.newstech.content.repository.StoryRepository;
 import com.web.newstech.content.StorySource;
 import com.web.newstech.curation.cluster.ItemCluster;
-import com.web.newstech.ingest.ConnectorType;
 import com.web.newstech.ingest.RawItem;
-import com.web.newstech.ingest.RawItemRepository;
-import com.web.newstech.ingest.RawItemStatus;
 import com.web.newstech.ingest.Source;
-import com.web.newstech.ingest.SourceRepository;
-import com.web.newstech.ingest.Triage;
+import com.web.newstech.ingest.enums.ConnectorType;
+import com.web.newstech.ingest.enums.RawItemStatus;
+import com.web.newstech.ingest.model.Triage;
+import com.web.newstech.ingest.repository.RawItemRepository;
+import com.web.newstech.ingest.repository.SourceRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -221,6 +221,10 @@ class EditorialServiceIT {
 				.build());
 	}
 
+	/**
+	 * Substitui o {@link ClaudeEditorialModel} pelo dublê. {@code @Primary} porque a
+	 * implementação real continua no contexto — ela só não pode ser a escolhida aqui.
+	 */
 	@TestConfiguration
 	static class StubConfig {
 
@@ -228,32 +232,6 @@ class EditorialServiceIT {
 		@Primary
 		StubEditorialModel stubEditorialModel() {
 			return new StubEditorialModel();
-		}
-
-	}
-
-	/** Dublê da porta: devolve decisões gravadas ou lança o que o teste pedir. */
-	static class StubEditorialModel implements EditorialModel {
-
-		private Function<ItemCluster, EditorialDecision> resposta;
-		private RuntimeException erro;
-
-		void responder(Function<ItemCluster, EditorialDecision> resposta) {
-			this.resposta = resposta;
-			this.erro = null;
-		}
-
-		void lancar(RuntimeException erro) {
-			this.erro = erro;
-			this.resposta = null;
-		}
-
-		@Override
-		public EditorialOutcome decide(ItemCluster cluster) {
-			if (erro != null) {
-				throw erro;
-			}
-			return new EditorialOutcome(resposta.apply(cluster), "stub", 1000, 200, 800);
 		}
 
 	}

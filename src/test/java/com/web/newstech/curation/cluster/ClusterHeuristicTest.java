@@ -1,7 +1,7 @@
 package com.web.newstech.curation.cluster;
 
 import com.web.newstech.ingest.RawItem;
-import com.web.newstech.ingest.Triage;
+import com.web.newstech.ingest.model.Triage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
