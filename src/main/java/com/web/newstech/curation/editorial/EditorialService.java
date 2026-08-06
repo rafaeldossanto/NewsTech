@@ -6,10 +6,11 @@ import com.web.newstech.content.StorySource;
 import com.web.newstech.curation.cluster.ClusterService;
 import com.web.newstech.curation.cluster.ItemCluster;
 import com.web.newstech.ingest.RawItem;
-import com.web.newstech.ingest.RawItemRepository;
-import com.web.newstech.ingest.RawItemStatus;
+
 import com.web.newstech.ingest.Source;
-import com.web.newstech.ingest.SourceRepository;
+import com.web.newstech.ingest.enums.RawItemStatus;
+import com.web.newstech.ingest.repository.RawItemRepository;
+import com.web.newstech.ingest.repository.SourceRepository;
 import com.web.newstech.shared.Slugs;
 import com.web.newstech.shared.config.NewsTechProperties;
 import lombok.RequiredArgsConstructor;
