@@ -78,11 +78,24 @@ public record NewsTechProperties(Mongo mongo, Ingest ingest, Claude claude, Clus
 			/* Quantos itens o estagio 1 processa por ciclo. */
 			@Positive int triageBatchSize,
 
-			/* Unico agendador que gasta dinheiro. Default false: so liga por decisao explicita,
-			 * depois do limite de gasto configurado no console da Anthropic. */
+			@NotBlank String editorialModel,
+
+			/* Inclui thinking + resposta. Generoso de proposito: peca truncada no meio e
+			 * pior que peca nenhuma, e o custo do teto alto e zero se nao for usado. */
+			@Positive long editorialMaxTokens,
+
+			/* Quantos clusters o estagio 2 processa por ciclo. Cada um e uma chamada paga. */
+			@Positive int editorialBatchSize,
+
+			/* Agendadores que gastam dinheiro. Default false nos dois: so ligam por decisao
+			 * explicita, depois do limite de gasto configurado no console da Anthropic. */
 			boolean autoTriage,
 
-			Duration triageInterval) {
+			boolean autoEditorial,
+
+			Duration triageInterval,
+
+			Duration editorialInterval) {
 	}
 
 }

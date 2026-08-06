@@ -69,4 +69,14 @@ public class RawItem {
 	/** Id da story que este item ajudou a compor, quando ja publicado. */
 	private String storyId;
 
+	/**
+	 * Quantas vezes o item ja passou pelo estagio editorial sem virar peca.
+	 *
+	 * <p>Acontece quando o agrupamento o coloca num cluster e o modelo conclui que ele
+	 * nao faz parte daquele fato. O item volta para a fila - mas sem um contador voltaria
+	 * para sempre, sendo reagrupado e rejeitado a cada ciclo, gastando uma chamada por vez.
+	 */
+	@Builder.Default
+	private int editorialAttempts = 0;
+
 }

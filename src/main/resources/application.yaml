@@ -41,10 +41,17 @@ newstech:
     # Corte inicial. Calibrar lendo os descartados antes de mexer.
     relevance-threshold: 40
     triage-batch-size: 25
-    # ATENCAO: este e o unico agendador que gasta dinheiro. Ligar so depois de
-    # configurar o limite de gasto no console da Anthropic.
+    editorial-model: claude-opus-5
+    # Inclui thinking + resposta.
+    editorial-max-tokens: 16000
+    editorial-batch-size: 10
+
+    # ATENCAO: os dois agendadores abaixo sao os unicos que gastam dinheiro.
+    # Ligar so depois de configurar o limite de gasto no console da Anthropic.
     auto-triage: false
+    auto-editorial: false
     triage-interval: PT15M
+    editorial-interval: PT20M
 
   cluster:
     window-hours: 48
