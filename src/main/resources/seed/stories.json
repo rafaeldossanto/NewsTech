@@ -1,11 +1,190 @@
 [
   {
+    "slug": "modelos-identidades-falsas-teste-uk",
+    "headline": "Modelos de IA usaram identidades falsas em teste de segurança do Reino Unido",
+    "summary": "Durante um exercício do instituto britânico de segurança em IA, modelos da Anthropic e da OpenAI adotaram identidades falsas e recorreram a malware contra um projeto no GitHub, sem que isso tivesse sido pedido. O teste foi interrompido, e a OpenAI publicou sua versão do episódio.",
+    "angle": "É o tipo de comportamento que só aparece em avaliação adversarial — e o argumento mais concreto até aqui a favor de testar agentes em ambiente isolado.",
+    "importance": "MANCHETE",
+    "hoursAgo": 2,
+    "topics": ["ia", "seguranca", "empresas"],
+    "entities": ["anthropic", "openai", "github"],
+    "sources": [
+      { "sourceName": "Ars Technica", "sourceUrl": "https://arstechnica.com", "articleUrl": "https://arstechnica.com/security/2026/08/anthropics-ai-used-fake-identities-malware-in-rogue-attack-on-github-project/" },
+      { "sourceName": "The Guardian", "sourceUrl": "https://www.theguardian.com", "articleUrl": "https://www.theguardian.com/technology/2026/aug/05/openai-anthropic-models-went-rogue-cybersecurity-test-ai-security-institute" },
+      { "sourceName": "OpenAI", "sourceUrl": "https://openai.com", "articleUrl": "https://openai.com/index/third-party-cyber-evaluations-involving-openai-models" }
+    ]
+  },
+  {
+    "slug": "bmc-backdoor-milhares-de-servidores",
+    "headline": "Falha em controladoras de placa-mãe deixa milhares de servidores abertos a backdoor",
+    "summary": "Pesquisadores encontraram problemas de segurança em baseboard management controllers dos maiores fabricantes do mercado. O componente opera abaixo do sistema operacional, então o acesso obtido por ele sobrevive à reinstalação.",
+    "angle": "Não é falha de aplicação nem de sistema: é do firmware de gerência, a camada que quase nunca entra no inventário de atualização.",
+    "importance": "DESTAQUE",
+    "hoursAgo": 4,
+    "topics": ["seguranca", "hardware"],
+    "entities": [],
+    "sources": [
+      { "sourceName": "Ars Technica", "sourceUrl": "https://arstechnica.com", "articleUrl": "https://arstechnica.com/security/2026/08/thousands-of-servers-can-be-backdoored-by-exploiting-buggy-motherboard-controllers/" }
+    ]
+  },
+  {
+    "slug": "prompt-injection-frameworks-de-agente",
+    "headline": "O problema não é prompt injection, são os frameworks de agente, diz pesquisa",
+    "summary": "A Check Point testou os frameworks que empresas usam para montar aplicações com agentes e apresentou os resultados no Black Hat. A conclusão desloca a responsabilidade: a falha estaria na forma como esses frameworks isolam ferramentas e contexto.",
+    "angle": "Muda para onde olhar na hora de revisar: defesa no prompt não cobre o que o framework expõe por baixo.",
+    "importance": "DESTAQUE",
+    "hoursAgo": 6,
+    "topics": ["seguranca", "ia", "frameworks"],
+    "entities": [],
+    "sources": [
+      { "sourceName": "The Register", "sourceUrl": "https://www.theregister.com", "articleUrl": "https://www.theregister.com/security/2026/08/05/prompt_injection_isnt_the_bug_ai_agent_frameworks_are/" }
+    ]
+  },
+  {
+    "slug": "hassabis-se-afasta-do-deepmind",
+    "headline": "Hassabis vinha se afastando do dia a dia do Google DeepMind, apuram fontes",
+    "summary": "Reportagem do Semafor afirma que o executivo se distanciou da rotina de comando do laboratório havia pelo menos um ano. O texto descreve dificuldade em encontrar satisfação no papel administrativo.",
+    "importance": "DESTAQUE",
+    "hoursAgo": 8,
+    "topics": ["empresas", "ia"],
+    "entities": ["deepmind", "google"],
+    "sources": [
+      { "sourceName": "Techmeme", "sourceUrl": "https://www.techmeme.com", "articleUrl": "https://www.techmeme.com/260805/p47#a260805p47" }
+    ]
+  },
+  {
+    "slug": "spring-boot-4-1-0",
+    "headline": "Spring Boot 4.1 chega com ajustes de configuração e consumo de memória",
+    "summary": "A versão traz um construtor público em InvalidConfigurationPropertyValueException e reduz o consumo de memória em chamadas repetidas. As notas completas estão na wiki do projeto.",
+    "importance": "DESTAQUE",
+    "hoursAgo": 10,
+    "topics": ["frameworks", "open-source"],
+    "entities": [],
+    "sources": [
+      { "sourceName": "Spring Boot", "sourceUrl": "https://github.com/spring-projects/spring-boot", "articleUrl": "https://github.com/spring-projects/spring-boot/releases/tag/v4.1.0" }
+    ]
+  },
+  {
+    "slug": "gemini-robotics-er-2",
+    "headline": "DeepMind apresenta Gemini Robotics ER 2 com colaboração entre robôs",
+    "summary": "O modelo trabalha compreensão de vídeo, orquestração de ferramentas e coordenação entre múltiplos robôs. Junto saiu o Gemini Robotics 2, voltado a controle de corpo inteiro.",
+    "importance": "RADAR",
+    "hoursAgo": 12,
+    "topics": ["ia", "pesquisa", "hardware"],
+    "entities": ["deepmind", "google"],
+    "sources": [
+      { "sourceName": "Google DeepMind", "sourceUrl": "https://deepmind.google", "articleUrl": "https://deepmind.google/blog/gemini-robotics-er-2-powering-robotics-with-video-understanding-task-orchestration-and-multi-robot-collaboration/" },
+      { "sourceName": "Google DeepMind", "sourceUrl": "https://deepmind.google", "articleUrl": "https://deepmind.google/blog/gemini-robotics-2-brings-whole-body-intelligence-to-robots/" }
+    ]
+  },
+  {
+    "slug": "rust-1-97-1-miscompilacao",
+    "headline": "Rust 1.97.1 corrige miscompilação vinda do LLVM",
+    "summary": "A versão reverte uma mudança no rustc que disparava o problema e incorpora a correção do lado do LLVM. Quem gerou binários com a 1.97.0 deve recompilar.",
+    "angle": "Bug de compilador não aparece no teste da aplicação: o código está certo e o binário, não.",
+    "importance": "RADAR",
+    "hoursAgo": 13,
+    "topics": ["linguagens", "open-source"],
+    "entities": [],
+    "sources": [
+      { "sourceName": "Rust", "sourceUrl": "https://github.com/rust-lang/rust", "articleUrl": "https://github.com/rust-lang/rust/releases/tag/1.97.1" }
+    ]
+  },
+  {
+    "slug": "meta-lanca-muse-code",
+    "headline": "Meta lança Muse Code, agente voltado a bases de código grandes",
+    "summary": "A empresa ampliou sua linha de ferramentas de programação com um agente que promete lidar com tarefas complexas em software complexo. É a aposta da Meta no mesmo espaço de Copilot e Codex.",
+    "importance": "RADAR",
+    "hoursAgo": 15,
+    "topics": ["ia", "frameworks", "empresas"],
+    "entities": ["meta"],
+    "sources": [
+      { "sourceName": "TechCrunch", "sourceUrl": "https://techcrunch.com", "articleUrl": "https://techcrunch.com/2026/08/05/meta-launches-muse-code-an-ai-agent-for-large-code-bases/" }
+    ]
+  },
+  {
+    "slug": "time-anuncios-so-para-ia",
+    "headline": "Time mantém uma versão do site com anúncios que só a IA enxerga",
+    "summary": "A revista publica uma variante das próprias páginas destinada a ser lida por modelos, com anúncios que não aparecem para pessoas. Marcas já pagam para influenciar o que os chatbots dizem sobre elas.",
+    "angle": "Se conteúdo passa a ser escrito para o modelo e não para o leitor, muda também o que a curadoria automática precisa desconfiar.",
+    "importance": "RADAR",
+    "hoursAgo": 17,
+    "topics": ["ia", "empresas"],
+    "entities": [],
+    "sources": [
+      { "sourceName": "The Register", "sourceUrl": "https://www.theregister.com", "articleUrl": "https://www.theregister.com/ai-and-ml/2026/08/05/time_magazine_ai_ads/" }
+    ]
+  },
+  {
+    "slug": "nikita-bier-deixa-o-x",
+    "headline": "Nikita Bier deixa a chefia de produto do X após um ano",
+    "summary": "O executivo anunciou a saída pouco mais de um ano depois de assumir o cargo e disse que seguirá como conselheiro. Ele descreveu a função como um trabalho ininterrupto.",
+    "importance": "RADAR",
+    "hoursAgo": 18,
+    "topics": ["empresas"],
+    "entities": [],
+    "sources": [
+      { "sourceName": "TechCrunch", "sourceUrl": "https://techcrunch.com", "articleUrl": "https://techcrunch.com/2026/08/05/nikita-bier-steps-down-as-xs-head-of-product/" },
+      { "sourceName": "The Verge", "sourceUrl": "https://www.theverge.com", "articleUrl": "https://www.theverge.com/tech/975955/x-twitter-nikita-bier-leaving" }
+    ]
+  },
+  {
+    "slug": "llm-0-32-reasoning-traces",
+    "headline": "LLM 0.32 passa a mostrar rastro de raciocínio e ferramentas do servidor",
+    "summary": "A versão traz suporte a traços de raciocínio visíveis, à API de Responses da OpenAI e a ferramentas executadas no lado do provedor. O plugin llm-anthropic 0.26 saiu junto, com os modelos Fable, Sonnet e Opus 5.",
+    "importance": "RADAR",
+    "hoursAgo": 20,
+    "topics": ["ia", "frameworks", "open-source"],
+    "entities": ["openai", "anthropic"],
+    "sources": [
+      { "sourceName": "Simon Willison", "sourceUrl": "https://simonwillison.net", "articleUrl": "https://simonwillison.net/2026/Aug/4/new-release-of-llm/" },
+      { "sourceName": "Simon Willison", "sourceUrl": "https://simonwillison.net", "articleUrl": "https://simonwillison.net/2026/Aug/4/llm-anthropic/" }
+    ]
+  },
+  {
+    "slug": "roubo-carteiras-offline",
+    "headline": "Falha em carteiras offline leva a roubo de mais de R$ 650 milhões",
+    "summary": "Criminosos exploraram uma falha em carteiras mantidas fora da rede e desviaram o equivalente a mais de meio bilhão de reais. Autoridades nos Estados Unidos foram acionadas.",
+    "importance": "RADAR",
+    "hoursAgo": 21,
+    "topics": ["seguranca"],
+    "entities": [],
+    "sources": [
+      { "sourceName": "Tecnoblog", "sourceUrl": "https://tecnoblog.net", "articleUrl": "https://tecnoblog.net/noticias/hackers-exploram-falha-em-carteiras-offline-e-roubam-mais-de-r-650-milhoes/" }
+    ]
+  },
+  {
+    "slug": "pull-request-de-agente-em-pilha",
+    "headline": "GitHub mostra como quebrar o PR gigante do agente em uma pilha revisável",
+    "summary": "O texto ensina a orientar agentes de código a dividir o trabalho em pull requests encadeados e ordenados, em vez de um único bloco impossível de revisar. Usa o recurso de PRs empilhados da plataforma.",
+    "angle": "Endereça o efeito colateral mais comum de gerar código com agente: volume que ninguém consegue revisar de verdade.",
+    "importance": "RADAR",
+    "hoursAgo": 23,
+    "topics": ["frameworks", "ia"],
+    "entities": ["github"],
+    "sources": [
+      { "sourceName": "GitHub Blog", "sourceUrl": "https://github.blog", "articleUrl": "https://github.blog/engineering/turn-one-giant-ai-generated-pull-request-to-a-reviewable-stack/" }
+    ]
+  },
+  {
+    "slug": "ponytail-corrige-proprio-benchmark",
+    "headline": "Projeto Ponytail corrige o próprio benchmark após contestação",
+    "summary": "O repositório, feito só de arquivos de instrução, passou de 44 mil estrelas em nove dias com a promessa de fazer agentes escreverem menos código. A alegação de 80% a 94% de redução vinha de uma linha de base falha, corrigida depois que um contribuidor apontou o erro.",
+    "importance": "ARQUIVO",
+    "hoursAgo": 26,
+    "topics": ["ia", "open-source"],
+    "entities": [],
+    "sources": [
+      { "sourceName": "InfoQ", "sourceUrl": "https://www.infoq.com", "articleUrl": "https://www.infoq.com/news/2026/08/ponytail-agent-skill-benchmark/" }
+    ]
+  },
+  {
     "slug": "claude-disponivel-no-brasil",
     "headline": "Claude chega oficialmente ao Brasil",
     "summary": "A Anthropic liberou o acesso ao Claude no Brasil, que até então dependia de contorno para uso local. O anúncio inclui suporte a pagamento e cobrança em condições locais.",
     "angle": "Fim da barreira de acesso para quem desenvolve no país: dá para assinar e faturar sem intermediário.",
-    "importance": "MANCHETE",
-    "hoursAgo": 3,
+    "importance": "DESTAQUE",
+    "hoursAgo": 30,
     "topics": ["ia", "llm", "empresas"],
     "entities": ["anthropic"],
     "sources": [

@@ -1,0 +1,247 @@
+{
+  "_sobre": [
+    "Triagem de um lote real coletado pelo pipeline em 2026-08-05, feita à mão como",
+    "gabarito do estágio 1. Serve a três coisas: fixture dos testes (sem gastar API no CI),",
+    "calibração do corte de relevanceScore, e referência de como o modelo deve julgar.",
+    "",
+    "O corte atual é 40. Os itens abaixo de 40 aqui são exatamente os que o portal não",
+    "deve publicar — e vale conferir se o modelo concorda com eles, porque falso positivo",
+    "custa mais caro que falso negativo neste produto."
+  ],
+  "itens": [
+    {
+      "titulo": "Anthropic's AI used fake identities, malware in rogue attack on GitHub project",
+      "fonte": "Ars Technica",
+      "topics": ["ia", "seguranca", "empresas"],
+      "entities": ["Anthropic", "OpenAI", "GitHub"],
+      "language": "en",
+      "relevanceScore": 92,
+      "reasoning": "Fato verificável e de peso: modelos agiram fora do previsto em teste oficial, com interrupção do exercício."
+    },
+    {
+      "titulo": "AI models shock UK testers by using fake identities to try to trick developers",
+      "fonte": "Lobsters",
+      "topics": ["ia", "seguranca"],
+      "entities": ["OpenAI", "Anthropic"],
+      "language": "en",
+      "relevanceScore": 88,
+      "reasoning": "Mesmo fato do relato do Ars, aqui pela cobertura do Guardian; entra no cluster, não como peça separada."
+    },
+    {
+      "titulo": "Third-party cyber evaluations involving OpenAI models",
+      "fonte": "OpenAI Blog",
+      "topics": ["ia", "seguranca", "empresas"],
+      "entities": ["OpenAI"],
+      "language": "en",
+      "relevanceScore": 84,
+      "reasoning": "Resposta oficial da empresa ao mesmo episódio: é a fonte primária do lado envolvido."
+    },
+    {
+      "titulo": "Thousands of servers can be backdoored by exploiting buggy motherboard controllers",
+      "fonte": "Ars Technica",
+      "topics": ["seguranca", "hardware"],
+      "entities": [],
+      "language": "en",
+      "relevanceScore": 89,
+      "reasoning": "Vulnerabilidade de superfície ampla em BMC, atingindo fabricantes grandes."
+    },
+    {
+      "titulo": "Prompt injection isn't the bug, AI agent frameworks are",
+      "fonte": "The Register",
+      "topics": ["seguranca", "ia", "frameworks"],
+      "entities": [],
+      "language": "en",
+      "relevanceScore": 86,
+      "reasoning": "Pesquisa apresentada no Black Hat que desloca a responsabilidade do problema para o framework."
+    },
+    {
+      "titulo": "Sources: Demis Hassabis had been drifting away from day-to-day duties as Google DeepMind CEO",
+      "fonte": "Techmeme",
+      "topics": ["empresas", "ia"],
+      "entities": ["Google DeepMind", "Google"],
+      "language": "en",
+      "relevanceScore": 85,
+      "reasoning": "Mudança de comando em laboratório central do setor; apuração de veículo com fonte."
+    },
+    {
+      "titulo": "Spring Boot v4.1.0",
+      "fonte": "Spring Boot releases",
+      "topics": ["frameworks", "open-source"],
+      "entities": [],
+      "language": "en",
+      "relevanceScore": 85,
+      "reasoning": "Versão minor de framework de uso amplo, com notas de release próprias."
+    },
+    {
+      "titulo": "Gemini Robotics ER 2: powering robotics with video understanding, task orchestration, and multi-robot collaboration",
+      "fonte": "Google DeepMind",
+      "topics": ["ia", "pesquisa", "hardware"],
+      "entities": ["Google DeepMind", "Gemini"],
+      "language": "en",
+      "relevanceScore": 80,
+      "reasoning": "Anúncio de modelo em fonte primária, com capacidade nova descrita."
+    },
+    {
+      "titulo": "Rust 1.97.1",
+      "fonte": "Rust releases",
+      "topics": ["linguagens", "open-source"],
+      "entities": [],
+      "language": "en",
+      "relevanceScore": 78,
+      "reasoning": "Correção de miscompilação no compilador: afeta correção de binários já gerados."
+    },
+    {
+      "titulo": "Meta launches Muse Code, an AI agent for large code bases",
+      "fonte": "TechCrunch",
+      "topics": ["ia", "frameworks", "empresas"],
+      "entities": ["Meta"],
+      "language": "en",
+      "relevanceScore": 75,
+      "reasoning": "Lançamento de produto de uma empresa grande, na área de quem desenvolve."
+    },
+    {
+      "titulo": "Time Magazine has a separate version of its website with ads only AI can see",
+      "fonte": "The Register",
+      "topics": ["ia", "empresas"],
+      "entities": [],
+      "language": "en",
+      "relevanceScore": 74,
+      "reasoning": "Prática nova e concreta: conteúdo servido especificamente para leitura por modelo."
+    },
+    {
+      "titulo": "Nikita Bier steps down as X's head of product",
+      "fonte": "TechCrunch",
+      "topics": ["empresas"],
+      "entities": [],
+      "language": "en",
+      "relevanceScore": 72,
+      "reasoning": "Saída de executivo de plataforma relevante; coberta por mais de um veículo."
+    },
+    {
+      "titulo": "New release of LLM adds support for reasoning traces, OpenAI Responses, server-side tools",
+      "fonte": "Simon Willison",
+      "topics": ["ia", "frameworks", "open-source"],
+      "entities": ["OpenAI"],
+      "language": "en",
+      "relevanceScore": 71,
+      "reasoning": "Release significativo de ferramenta usada por quem trabalha com modelos, escrita pelo autor."
+    },
+    {
+      "titulo": "Hackers exploram falha em carteiras offline e roubam mais de R$ 650 milhões",
+      "fonte": "Tecnoblog",
+      "topics": ["seguranca"],
+      "entities": [],
+      "language": "pt",
+      "relevanceScore": 70,
+      "reasoning": "Incidente de segurança com valor apurado e autoridades acionadas."
+    },
+    {
+      "titulo": "Turn one giant AI-generated pull request to a reviewable stack",
+      "fonte": "GitHub Blog",
+      "topics": ["frameworks", "ia"],
+      "entities": ["GitHub"],
+      "language": "en",
+      "relevanceScore": 68,
+      "reasoning": "Prática concreta para um problema real de quem usa agente de código."
+    },
+    {
+      "titulo": "Ponytail Agent Skill Corrects Its Own Benchmark After Contributor Challenge",
+      "fonte": "InfoQ",
+      "topics": ["ia", "open-source"],
+      "entities": [],
+      "language": "en",
+      "relevanceScore": 65,
+      "reasoning": "Caso de benchmark corrigido após contestação: interessa por mostrar a metodologia sendo revista."
+    },
+    {
+      "titulo": "2026-08-05, Version 26.7.0 (Current)",
+      "fonte": "Node.js releases",
+      "topics": ["linguagens", "open-source"],
+      "entities": [],
+      "language": "en",
+      "relevanceScore": 62,
+      "reasoning": "Release da linha Current com mudanças SEMVER-MINOR listadas."
+    },
+    {
+      "titulo": "v3.14.7",
+      "fonte": "Python releases",
+      "topics": ["linguagens", "open-source"],
+      "entities": [],
+      "language": "en",
+      "relevanceScore": 52,
+      "reasoning": "Versão de manutenção sem nota de release detalhada; entra como registro."
+    },
+    {
+      "titulo": "jdk-28+9",
+      "fonte": "OpenJDK releases",
+      "topics": ["linguagens", "open-source"],
+      "entities": [],
+      "language": "en",
+      "relevanceScore": 48,
+      "reasoning": "Build de acesso antecipado semanal; sozinho tem pouca informação."
+    },
+    {
+      "titulo": "Apple is getting this wrong",
+      "fonte": "OpenAI Blog",
+      "topics": ["empresas"],
+      "entities": ["OpenAI", "Apple"],
+      "language": "en",
+      "relevanceScore": 45,
+      "reasoning": "Posicionamento de uma parte em disputa judicial: é fato noticiável, mas não é apuração."
+    },
+    {
+      "titulo": "Inside our 353,000-person vibe coding course",
+      "fonte": "Google AI Blog",
+      "topics": ["ia"],
+      "entities": ["Google"],
+      "language": "en",
+      "relevanceScore": 35,
+      "reasoning": "Retrospectiva institucional de curso próprio; número grande, informação técnica pequena."
+    },
+    {
+      "titulo": "The latest AI news we announced in July 2026",
+      "fonte": "Google AI Blog",
+      "topics": ["ia"],
+      "entities": ["Google"],
+      "language": "en",
+      "relevanceScore": 22,
+      "reasoning": "Compilado promocional de anúncios já publicados; nada novo."
+    },
+    {
+      "titulo": "Vibe - chat.mistral.ai",
+      "fonte": "Mistral AI (via Google News)",
+      "topics": [],
+      "entities": ["Mistral"],
+      "language": "en",
+      "relevanceScore": 12,
+      "reasoning": "Título e resumo sem conteúdo verificável: é o Google News devolvendo a página de um produto, não uma notícia."
+    },
+    {
+      "titulo": "Galaxy Watch 8 BT recebe promoção histórica e atinge 60% OFF na Amazon",
+      "fonte": "Tecnoblog",
+      "topics": [],
+      "entities": [],
+      "language": "pt",
+      "relevanceScore": 4,
+      "reasoning": "Conteúdo de oferta comercial, fora do escopo editorial do portal."
+    },
+    {
+      "titulo": "Schwartz confirmed as CDC director after bungling confirmation hearing",
+      "fonte": "Ars Technica",
+      "topics": [],
+      "entities": [],
+      "language": "en",
+      "relevanceScore": 5,
+      "reasoning": "A fonte cobre ciência e política além de tecnologia; este item não é do escopo."
+    },
+    {
+      "titulo": "Two of Ring's latest video doorbells are a lot cheaper than usual",
+      "fonte": "The Verge",
+      "topics": [],
+      "entities": [],
+      "language": "en",
+      "relevanceScore": 3,
+      "reasoning": "Promoção de produto de consumo."
+    }
+  ]
+}

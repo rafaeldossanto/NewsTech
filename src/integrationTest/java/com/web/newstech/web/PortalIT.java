@@ -35,12 +35,19 @@ class PortalIT {
 	@Test
 	@DisplayName("home é pública e traz manchete, destaques e radar")
 	void home() throws Exception {
-		mockMvc.perform(get("/"))
+		// Verifica a estrutura editorial, não uma peça específica: o conteúdo do seed muda,
+		// e amarrar o teste a um título faz ele quebrar quando a home apenas se atualiza.
+		String corpo = mockMvc.perform(get("/"))
 				.andExpect(status().isOk())
 				.andExpect(view().name("home"))
-				.andExpect(content().string(containsString("Claude chega oficialmente ao Brasil")))
 				.andExpect(content().string(containsString("Destaques")))
-				.andExpect(content().string(containsString("Radar")));
+				.andExpect(content().string(containsString("Radar")))
+				.andReturn().getResponse().getContentAsString();
+
+		assertThat(corpo)
+				.as("a manchete precisa ter o selo que a distingue das demais")
+				.contains("class=\"flag\"");
+		assertThat(corpo).contains("class=\"lead-story\"", "class=\"highlight\"", "class=\"radar-item\"");
 	}
 
 	@Test
