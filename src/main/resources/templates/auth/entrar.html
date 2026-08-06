@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/base}">
+<head>
+	<title th:text="${pageTitle}">Entrar</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+	<div class="form-page">
+		<header class="page-head">
+			<div class="kicker">Conta</div>
+			<h1>Entrar</h1>
+		</header>
+
+		<p class="form-message" th:if="${message}" th:text="${message}"></p>
+		<p class="form-error" th:if="${param.error}">Usuário ou senha incorretos.</p>
+		<p class="form-message" th:if="${param.logout}">Você saiu da conta.</p>
+
+		<form th:action="@{/entrar}" method="post" class="stacked-form">
+			<label>
+				Nome de usuário
+				<input type="text" name="username" required autocomplete="username">
+			</label>
+			<label>
+				Senha
+				<input type="password" name="password" required autocomplete="current-password">
+			</label>
+			<button type="submit">Entrar</button>
+		</form>
+
+		<p class="form-foot">Não tem conta? <a th:href="@{/cadastro}">Criar conta</a></p>
+	</div>
+
+</div>
+
+</body>
+</html>

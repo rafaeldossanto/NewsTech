@@ -47,6 +47,8 @@ public class MongoBootstrap implements InitializingBean {
 	public static final String STORIES = "stories";
 	public static final String TOPICS = "topics";
 	public static final String ENTITIES = "entities";
+	public static final String USERS = "users";
+	public static final String ARTICLES = "articles";
 
 	/** Codigo do erro IndexOptionsConflict do MongoDB. */
 	private static final int INDEX_OPTIONS_CONFLICT = 85;
@@ -65,6 +67,7 @@ public class MongoBootstrap implements InitializingBean {
 		createRawItemIndexes(database);
 		createStoryIndexes(database);
 		createTaxonomyIndexes(database);
+		createAuthoringIndexes(database);
 
 		log.info("MongoBootstrap concluido: indices e validadores aplicados em '{}'", database.getName());
 	}
@@ -209,6 +212,30 @@ public class MongoBootstrap implements InitializingBean {
 		// Resolve "Anthropic", "anthropic" e "@AnthropicAI" para a mesma entidade.
 		createIndex(database, ENTITIES, Indexes.ascending("aliases"),
 				new IndexOptions().name("idx_aliases"));
+	}
+
+	private void createAuthoringIndexes(MongoDatabase database) {
+		// Unicidade de conta e decidida aqui, nao na aplicacao: duas inscricoes simultaneas
+		// passam pela checagem de existencia antes de qualquer uma gravar.
+		createIndex(database, USERS, Indexes.ascending("username"),
+				new IndexOptions().name("uk_username").unique(true));
+		createIndex(database, USERS, Indexes.ascending("email"),
+				new IndexOptions().name("uk_email").unique(true));
+
+		createIndex(database, ARTICLES, Indexes.ascending("slug"),
+				new IndexOptions().name("uk_slug").unique(true));
+		// Limite diario por autor.
+		createIndex(database, ARTICLES, Indexes.compoundIndex(
+						Indexes.ascending("authorId"), Indexes.descending("publishedAt")),
+				new IndexOptions().name("idx_author_publishedAt"));
+		// Listagens publicas: so o que esta publicado e fora da quarentena entra no fluxo.
+		createIndex(database, ARTICLES, Indexes.compoundIndex(
+						Indexes.ascending("status"), Indexes.ascending("homeEligible"),
+						Indexes.descending("publishedAt")),
+				new IndexOptions().name("idx_status_home_publishedAt"));
+		createIndex(database, ARTICLES, Indexes.compoundIndex(
+						Indexes.ascending("topics"), Indexes.descending("publishedAt")),
+				new IndexOptions().name("idx_topics_publishedAt"));
 	}
 
 	private void createIndex(MongoDatabase database, String collection, Bson key, IndexOptions options) {

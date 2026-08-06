@@ -157,6 +157,22 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-
 .site-nav a:hover { color: var(--ink); border-bottom-color: var(--rule-strong); }
 .site-nav a.on { color: var(--ink); border-bottom-color: var(--accent); }
 
+.header-actions { display: flex; align-items: center; gap: .75rem; }
+.inline-form { display: inline; }
+
+.header-link {
+	font-family: var(--mono);
+	font-size: .72rem;
+	letter-spacing: .06em;
+	text-transform: uppercase;
+	color: var(--ink-soft);
+	background: transparent;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+}
+.header-link:hover { color: var(--accent); }
+
 .theme-toggle {
 	font-family: var(--mono);
 	font-size: .72rem;
@@ -416,6 +432,55 @@ main { padding: 2rem 0 4rem; }
 	letter-spacing: -.015em;
 }
 .page-head p { margin: 0; color: var(--ink-soft); max-width: 60ch; }
+
+/* ============ formularios de conta ============ */
+
+.form-page { max-width: 26rem; margin: 0 auto; }
+
+.stacked-form { display: flex; flex-direction: column; gap: 1.1rem; }
+.stacked-form label { display: flex; flex-direction: column; gap: .3rem; font-size: .88rem; font-weight: 600; }
+.stacked-form small { font-weight: 400; font-size: .76rem; color: var(--ink-faint); }
+.stacked-form input,
+.stacked-form textarea {
+	font: inherit;
+	font-weight: 400;
+	padding: .55rem .7rem;
+	border: 1px solid var(--rule-strong);
+	border-radius: 4px;
+	background: var(--surface);
+	color: var(--ink);
+}
+.stacked-form input:focus,
+.stacked-form textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.stacked-form textarea { min-height: 22rem; font-family: var(--mono); font-size: .88rem; line-height: 1.6; }
+.stacked-form button {
+	font-family: var(--mono);
+	font-size: .8rem;
+	letter-spacing: .06em;
+	text-transform: uppercase;
+	padding: .65rem 1.2rem;
+	border: 1px solid var(--ink);
+	border-radius: 4px;
+	background: var(--ink);
+	color: var(--paper);
+	cursor: pointer;
+	align-self: flex-start;
+}
+.stacked-form button:hover { opacity: .85; }
+
+.form-error,
+.form-message {
+	padding: .7rem .9rem;
+	border-radius: 4px;
+	font-size: .9rem;
+	margin: 0 0 1.2rem;
+	border: 1px solid currentColor;
+}
+.form-error { color: var(--flag); background: var(--flag-soft); }
+.form-message { color: var(--accent); background: var(--accent-soft); }
+
+.form-foot { margin-top: 1.5rem; font-size: .88rem; color: var(--ink-faint); }
+.form-foot a { color: var(--accent); text-decoration: underline; text-underline-offset: .15em; }
 
 /* ============ carregar mais ============ */
 

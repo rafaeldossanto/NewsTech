@@ -50,7 +50,7 @@ class AdminSecurityIT {
 	void bloqueiaAnonimo() throws Exception {
 		mockMvc.perform(get("/admin/sources"))
 				.andExpect(status().is3xxRedirection())
-				.andExpect(redirectedUrl("/login"));
+				.andExpect(redirectedUrl("/entrar"));
 	}
 
 	@Test

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/base}">
+<head>
+	<title th:text="${pageTitle}">Criar conta</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+	<div class="form-page">
+		<header class="page-head">
+			<div class="kicker">Conta</div>
+			<h1>Criar conta</h1>
+			<p>Para publicar artigos assinados no NewsTech.</p>
+		</header>
+
+		<p class="form-error" th:if="${error}" th:text="${error}"></p>
+
+		<form th:action="@{/cadastro}" method="post" class="stacked-form">
+			<label>
+				E-mail
+				<input type="email" name="email" th:value="${email}" required autocomplete="email">
+			</label>
+			<label>
+				Nome de usuário
+				<input type="text" name="username" th:value="${username}" required autocomplete="username"
+					   pattern="[a-z0-9][a-z0-9-]{2,19}">
+				<small>3 a 20 caracteres: letras minúsculas, números e hífen. Aparece na sua assinatura.</small>
+			</label>
+			<label>
+				Senha
+				<input type="password" name="password" required minlength="8" autocomplete="new-password">
+				<small>Pelo menos 8 caracteres.</small>
+			</label>
+			<button type="submit">Criar conta</button>
+		</form>
+
+		<p class="form-foot">Já tem conta? <a th:href="@{/entrar}">Entrar</a></p>
+	</div>
+
+</div>
+
+</body>
+</html>

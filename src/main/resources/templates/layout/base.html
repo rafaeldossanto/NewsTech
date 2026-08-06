@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR"
 	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 	<meta charset="UTF-8">
@@ -30,7 +31,16 @@
 			   th:classappend="${t.slug == activeTopic} ? 'on' : ''">Tópico</a>
 		</nav>
 
-		<button class="theme-toggle" type="button" id="themeToggle" aria-label="Alternar tema claro e escuro">tema</button>
+		<div class="header-actions">
+			<th:block sec:authorize="isAuthenticated()">
+				<a class="header-link" th:href="@{/escrever}">escrever</a>
+				<form th:action="@{/logout}" method="post" class="inline-form">
+					<button class="header-link" type="submit">sair</button>
+				</form>
+			</th:block>
+			<a class="header-link" th:href="@{/entrar}" sec:authorize="!isAuthenticated()">entrar</a>
+			<button class="theme-toggle" type="button" id="themeToggle" aria-label="Alternar tema claro e escuro">tema</button>
+		</div>
 	</div>
 </header>
 

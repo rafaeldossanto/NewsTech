@@ -52,6 +52,8 @@ dependencies {
 	implementation 'com.rometools:rome:2.1.0'
 	// Sanitizacao do HTML que vem nos feeds. Obrigatorio: sem isso e XSS no proprio portal.
 	implementation 'org.jsoup:jsoup:1.18.3'
+	// Markdown dos artigos assinados, renderizado no servidor
+	implementation 'org.commonmark:commonmark:0.24.0'
 	// Cache local das consultas quentes (home, listagens). Versao gerenciada pelo Spring Boot.
 	implementation 'com.github.ben-manes.caffeine:caffeine'
 	// Layouts/fragments reutilizaveis no Thymeleaf

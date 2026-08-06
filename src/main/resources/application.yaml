@@ -53,6 +53,11 @@ newstech:
     triage-interval: PT15M
     editorial-interval: PT20M
 
+  authoring:
+    publish-window: PT24H
+    quarantine-articles: 3
+    max-title-length: 120
+
   cluster:
     window-hours: 48
     # Os clusters reais do primeiro lote pontuaram entre 0,36 e 0,60; pares de assuntos

@@ -14,7 +14,20 @@ import java.time.Duration;
  */
 @Validated
 @ConfigurationProperties(prefix = "newstech")
-public record NewsTechProperties(Mongo mongo, Ingest ingest, Claude claude, Cluster cluster, Admin admin) {
+public record NewsTechProperties(Mongo mongo, Ingest ingest, Claude claude, Cluster cluster, Admin admin,
+								 Authoring authoring) {
+
+	public record Authoring(
+
+			/* Janela deslizante do limite de publicacao por autor. */
+			Duration publishWindow,
+
+			/* Artigos publicados que uma conta precisa ter para sair da quarentena e
+			 * alcancar a home. Limita o ganho de criar conta descartavel para spam. */
+			@Positive int quarantineArticles,
+
+			@Positive int maxTitleLength) {
+	}
 
 	public record Cluster(
 
