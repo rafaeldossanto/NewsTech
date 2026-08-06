@@ -14,7 +14,18 @@ import java.time.Duration;
  */
 @Validated
 @ConfigurationProperties(prefix = "newstech")
-public record NewsTechProperties(Mongo mongo, Ingest ingest, Claude claude, Admin admin) {
+public record NewsTechProperties(Mongo mongo, Ingest ingest, Claude claude, Cluster cluster, Admin admin) {
+
+	public record Cluster(
+
+			/* Janela em que dois itens ainda podem ser o mesmo fato. Larga demais junta
+			 * cobertura de assuntos recorrentes; estreita demais perde repercussão tardia. */
+			@Positive int windowHours,
+
+			/* Pontuação mínima para agrupar. Calibrar contra casos reais, não no escuro:
+			 * os clusters do primeiro lote coletado pontuaram entre 0,36 e 0,60. */
+			double threshold) {
+	}
 
 	public record Admin(
 

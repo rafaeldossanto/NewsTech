@@ -45,3 +45,9 @@ newstech:
     # configurar o limite de gasto no console da Anthropic.
     auto-triage: false
     triage-interval: PT15M
+
+  cluster:
+    window-hours: 48
+    # Os clusters reais do primeiro lote pontuaram entre 0,36 e 0,60; pares de assuntos
+    # apenas parecidos ficaram abaixo de 0,25. 0,30 separa os dois grupos com folga.
+    threshold: 0.30
