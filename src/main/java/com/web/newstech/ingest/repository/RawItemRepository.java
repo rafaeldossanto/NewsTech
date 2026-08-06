@@ -1,5 +1,7 @@
-package com.web.newstech.ingest;
+package com.web.newstech.ingest.repository;
 
+import com.web.newstech.ingest.RawItem;
+import com.web.newstech.ingest.enums.RawItemStatus;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 

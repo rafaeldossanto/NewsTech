@@ -2,11 +2,11 @@ package com.web.newstech.web;
 
 import com.web.newstech.content.Importance;
 import com.web.newstech.content.Story;
-import com.web.newstech.content.StoryRepository;
+import com.web.newstech.content.repository.StoryRepository;
 import com.web.newstech.content.Topic;
-import com.web.newstech.content.TopicRepository;
+import com.web.newstech.content.repository.TopicRepository;
 import com.web.newstech.content.TrackedEntity;
-import com.web.newstech.content.TrackedEntityRepository;
+import com.web.newstech.content.repository.TrackedEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -21,12 +21,6 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-/**
- * As paginas publicas do portal.
- *
- * <p>Renderizacao no servidor porque portal de noticia vive de SEO e de abrir rapido
- * em conexao ruim - o HTML sai pronto e cacheavel.
- */
 @Controller
 @RequiredArgsConstructor
 public class PortalController {
@@ -41,7 +35,6 @@ public class PortalController {
 	private final TopicRepository topicRepository;
 	private final TrackedEntityRepository entityRepository;
 
-	/** A navegacao por topicos aparece em toda pagina, entao vive no layout. */
 	@ModelAttribute("navTopics")
 	public List<Topic> navTopics() {
 		return topicRepository.findByActiveTrueOrderByDisplayOrderAsc();
@@ -55,8 +48,6 @@ public class PortalController {
 		List<Story> destaques = storyRepository.findByImportanceOrderByPublishedAtDesc(
 				Importance.DESTAQUE, PageRequest.of(0, LIMITE_DESTAQUES));
 
-		// O radar e cronologico e ignora importancia: e a leitura de "o que saiu hoje".
-		// A manchete e removida para nao aparecer duas vezes na mesma tela.
 		List<Story> radar = storyRepository.findByPublishedAtAfterOrderByPublishedAtDesc(
 						Instant.now().minus(HORAS_DO_RADAR, ChronoUnit.HOURS),
 						PageRequest.of(0, LIMITE_RADAR)).stream()
@@ -84,11 +75,6 @@ public class PortalController {
 		return "story";
 	}
 
-	/**
-	 * A story guarda slugs, mas o leitor precisa ver nome: "Segurança", não "seguranca".
-	 * Slug sem cadastro correspondente é omitido - melhor não mostrar o chip do que
-	 * mostrar um rótulo cru que leva a lugar nenhum.
-	 */
 	private List<Chip> topicChips(List<String> slugs) {
 		return slugs.stream()
 				.flatMap(slug -> topicRepository.findBySlug(slug).stream())
@@ -118,11 +104,6 @@ public class PortalController {
 		return "entity";
 	}
 
-	/**
-	 * Topico na raiz ({@code /ia}, {@code /seguranca}) porque a url e lida e compartilhada.
-	 * Como o padrao captura qualquer caminho de um segmento, um slug desconhecido precisa
-	 * virar 404 explicito - senao qualquer url errada renderizaria uma pagina vazia.
-	 */
 	@GetMapping("/{slug}")
 	public String topic(@PathVariable String slug, Model model) {
 		Topic topic = topicRepository.findBySlug(slug)
@@ -134,20 +115,11 @@ public class PortalController {
 		model.addAttribute("topic", topic);
 		model.addAttribute("activeTopic", slug);
 		model.addAttribute("stories", StoryView.from(primeiraPagina));
-		// So oferece o botao quando a primeira pagina veio cheia; lista curta nao ganha
-		// um controle que nao faz nada.
 		model.addAttribute("hasMore", primeiraPagina.size() == PAGINA);
 		model.addAttribute("pageTitle", topic.getName());
 		return "topic";
 	}
 
-	/**
-	 * Proxima pagina de cards de um topico, ja em HTML.
-	 *
-	 * <p>Devolve fragmento e nao JSON porque quem monta a peca e o servidor: manda o
-	 * markup pronto e o cliente so injeta. Assim nao existe uma segunda implementacao
-	 * do card em JavaScript para divergir da primeira.
-	 */
 	@GetMapping("/{slug}/pagina/{page}")
 	public String topicPage(@PathVariable String slug, @PathVariable int page, Model model) {
 		if (topicRepository.findBySlug(slug).isEmpty()) {
@@ -160,7 +132,6 @@ public class PortalController {
 		return "fragments/story-list :: page";
 	}
 
-	/** Peças do mesmo tópico principal, sem repetir a que está aberta. */
 	private List<Story> relacionadas(Story story) {
 		if (story.getTopics().isEmpty()) {
 			return List.of();

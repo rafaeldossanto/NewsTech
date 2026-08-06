@@ -1,5 +1,6 @@
 package com.web.newstech.ingest;
 
+import com.web.newstech.ingest.enums.ConnectorType;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

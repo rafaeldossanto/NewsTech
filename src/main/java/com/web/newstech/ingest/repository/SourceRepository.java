@@ -1,5 +1,6 @@
-package com.web.newstech.ingest;
+package com.web.newstech.ingest.repository;
 
+import com.web.newstech.ingest.Source;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;

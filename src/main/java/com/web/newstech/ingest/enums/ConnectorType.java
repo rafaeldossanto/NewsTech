@@ -1,4 +1,4 @@
-package com.web.newstech.ingest;
+package com.web.newstech.ingest.enums;
 
 /**
  * Tipo de conector que sabe coletar de uma fonte.

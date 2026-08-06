@@ -1,5 +1,7 @@
-package com.web.newstech.content;
+package com.web.newstech.content.repository;
 
+import com.web.newstech.content.Importance;
+import com.web.newstech.content.Story;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -13,16 +15,12 @@ public interface StoryRepository extends MongoRepository<Story, String> {
 
 	boolean existsBySlug(String slug);
 
-	/** Home: faixas por importancia. Usa {@code idx_publishedAt}. */
 	List<Story> findByImportanceOrderByPublishedAtDesc(Importance importance, Pageable pageable);
 
-	/** Radar das ultimas 24h. */
 	List<Story> findByPublishedAtAfterOrderByPublishedAtDesc(Instant since, Pageable pageable);
 
-	/** Pagina de topico. Usa {@code idx_topics_publishedAt} (multikey). */
 	List<Story> findByTopicsContainingOrderByPublishedAtDesc(String topicSlug, Pageable pageable);
 
-	/** Hub de entidade. Usa {@code idx_entities_publishedAt} (multikey). */
 	List<Story> findByEntitiesContainingOrderByPublishedAtDesc(String entitySlug, Pageable pageable);
 
 	List<Story> findAllByOrderByPublishedAtDesc(Pageable pageable);

@@ -11,13 +11,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-/**
- * Empresa ou pessoa acompanhada pelo portal. Alimenta os hubs ({@code /empresa/anthropic}),
- * que sao o diferencial do nicho: quem quer seguir uma empresa tem pagina propria.
- *
- * <p>Chamada de {@code TrackedEntity} e nao {@code Entity} para nao colidir com o
- * vocabulario de persistencia.
- */
 @Getter
 @Setter
 @Builder
@@ -29,7 +22,6 @@ public class TrackedEntity {
 	@Id
 	private String id;
 
-	/** Usado na url e como valor em {@code stories.entities}. */
 	@NotBlank
 	private String slug;
 
@@ -38,20 +30,9 @@ public class TrackedEntity {
 
 	private EntityType type;
 
-	/**
-	 * Formas alternativas de citar a mesma entidade: "Anthropic", "@AnthropicAI",
-	 * "Moonshot AI" e "Kimi". Indexado - e por aqui que a triagem resolve o texto
-	 * livre do modelo para um slug canonico.
-	 */
 	@Builder.Default
 	private List<String> aliases = List.of();
 
 	private String description;
-
-	public enum EntityType {
-		COMPANY,
-		PERSON,
-		PRODUCT
-	}
 
 }

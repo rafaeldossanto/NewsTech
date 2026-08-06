@@ -1,11 +1,11 @@
 package com.web.newstech.web.admin;
 
-import com.web.newstech.ingest.ConnectorType;
+import com.web.newstech.ingest.enums.ConnectorType;
 import com.web.newstech.ingest.IngestService;
-import com.web.newstech.ingest.RawItemRepository;
-import com.web.newstech.ingest.RawItemStatus;
+import com.web.newstech.ingest.repository.RawItemRepository;
+import com.web.newstech.ingest.enums.RawItemStatus;
 import com.web.newstech.ingest.Source;
-import com.web.newstech.ingest.SourceRepository;
+import com.web.newstech.ingest.repository.SourceRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

@@ -1,7 +1,7 @@
 package com.web.newstech.curation.editorial;
 
 import com.web.newstech.content.Story;
-import com.web.newstech.content.StoryRepository;
+import com.web.newstech.content.repository.StoryRepository;
 import com.web.newstech.content.StorySource;
 import com.web.newstech.curation.cluster.ClusterService;
 import com.web.newstech.curation.cluster.ItemCluster;

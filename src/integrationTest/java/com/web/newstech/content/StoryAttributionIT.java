@@ -2,6 +2,7 @@ package com.web.newstech.content;
 
 import com.mongodb.MongoWriteException;
 import com.web.newstech.TestcontainersConfiguration;
+import com.web.newstech.content.repository.StoryRepository;
 import jakarta.validation.ConstraintViolationException;
 import org.bson.Document;
 import org.junit.jupiter.api.DisplayName;

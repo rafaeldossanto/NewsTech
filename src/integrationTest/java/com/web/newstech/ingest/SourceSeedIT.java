@@ -1,6 +1,7 @@
 package com.web.newstech.ingest;
 
 import com.web.newstech.TestcontainersConfiguration;
+import com.web.newstech.ingest.repository.SourceRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

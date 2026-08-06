@@ -5,17 +5,6 @@ import lombok.experimental.UtilityClass;
 
 import java.util.Objects;
 
-/**
- * Prompt do estagio 1.
- *
- * <p>O texto do sistema e estavel entre todas as chamadas e por isso vai marcado para
- * cache. Atencao: o cache de prompt so entra em vigor se o bloco passar do minimo de
- * tokens do modelo (na familia Haiku o minimo e maior que na Opus). Se ficar abaixo,
- * a marcacao e ignorada em silencio - sem erro. Para conferir se pegou, olhar
- * {@code usage.cacheCreationInputTokens()} na primeira chamada e
- * {@code usage.cacheReadInputTokens()} nas seguintes: se vierem zerados, o prompt
- * e curto demais e o cache nao esta valendo nada.
- */
 @UtilityClass
 public class TriagePrompt {
 

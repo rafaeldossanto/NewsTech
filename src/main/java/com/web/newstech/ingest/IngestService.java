@@ -3,6 +3,11 @@ package com.web.newstech.ingest;
 import com.web.newstech.ingest.connector.FetchResult;
 import com.web.newstech.ingest.connector.FetchedItem;
 import com.web.newstech.ingest.connector.SourceConnector;
+import com.web.newstech.ingest.enums.ConnectorType;
+import com.web.newstech.ingest.enums.RawItemStatus;
+import com.web.newstech.ingest.model.IngestReport;
+import com.web.newstech.ingest.repository.RawItemRepository;
+import com.web.newstech.ingest.repository.SourceRepository;
 import com.web.newstech.shared.config.NewsTechProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
@@ -15,13 +20,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-/**
- * Orquestra um ciclo de coleta: escolhe as fontes devidas, chama o conector de cada
- * uma, deduplica e persiste.
- *
- * <p>Falha de uma fonte nao derruba o ciclo. Uma fonte fora do ar nao pode impedir
- * as outras trinta de serem coletadas.
- */
 @Slf4j
 @Service
 public class IngestService {
@@ -40,7 +38,7 @@ public class IngestService {
 		connectors.forEach(connector -> this.connectors.put(connector.type(), connector));
 	}
 
-	public IngestReport collectAll() {
+	public void collectAll() {
 		Instant now = Instant.now();
 		List<Source> due = sourceRepository.findByActiveTrue().stream()
 				.filter(source -> source.isDueAt(now))
@@ -68,13 +66,8 @@ public class IngestService {
 
 		IngestReport report = new IngestReport(due.size(), items, duplicates, notModified, failures);
 		log.info("Coleta concluida: {}", report);
-		return report;
 	}
 
-	/**
-	 * Coleta uma fonte. Propaga excecao para o chamador decidir o backoff - assim este
-	 * metodo tambem serve ao "coletar agora" do admin, onde o erro precisa ser visivel.
-	 */
 	public SourceOutcome collect(Source source) {
 		SourceConnector connector = connectors.get(source.getConnectorType());
 		if (Objects.isNull(connector)) {
@@ -101,14 +94,9 @@ public class IngestService {
 		return new SourceOutcome(collected, duplicates, result.notModified());
 	}
 
-	/**
-	 * @return {@code true} se o item era novo e foi gravado
-	 */
 	private boolean persist(Source source, FetchedItem item) {
 		String contentHash = ContentHasher.hash(item.title(), item.url());
 
-		// Checagem em codigo evita a exception no caminho normal; os indices unicos
-		// continuam sendo a garantia real, inclusive contra dois ciclos concorrentes.
 		if (rawItemRepository.existsBySourceIdAndExternalId(source.getId(), item.externalId())
 				|| rawItemRepository.existsByContentHash(contentHash)) {
 			return false;
@@ -119,8 +107,6 @@ public class IngestService {
 				.externalId(item.externalId())
 				.title(item.title())
 				.url(item.url())
-				// Feed sem data e comum. Cair para "agora" mantem o item na janela do pipeline
-				// em vez de descarta-lo por falta de metadado da fonte.
 				.publishedAt(Objects.requireNonNullElseGet(item.publishedAt(), Instant::now))
 				.summary(item.summary())
 				.contentHash(contentHash)

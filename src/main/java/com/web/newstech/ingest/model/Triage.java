@@ -1,4 +1,6 @@
-package com.web.newstech.ingest;
+package com.web.newstech.ingest.model;
+
+import com.web.newstech.ingest.RawItem;
 
 import java.time.Instant;
 import java.util.List;

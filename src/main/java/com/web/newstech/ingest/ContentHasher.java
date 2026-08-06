@@ -11,20 +11,13 @@ import java.text.Normalizer;
 import java.util.Arrays;
 import java.util.HexFormat;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
-/**
- * Gera a chave de deduplicacao de um item.
- *
- * <p>O hash e do titulo normalizado + url canonica, e nao do conteudo bruto: o mesmo
- * artigo chega com pontuacao diferente, com acento perdido no encoding, e quase sempre
- * com parametros de tracking colados na url. Comparar o bruto nao deduplicaria nada.
- */
+import static java.util.Objects.isNull;
+
 @UtilityClass
 public class ContentHasher {
 
-	/** Parametros que so identificam a campanha que trouxe o clique, nunca o recurso. */
 	private static final String[] TRACKING_PARAM_PREFIXES = {
 			"utm_", "fbclid", "gclid", "mc_cid", "mc_eid", "ref", "source", "at_medium", "at_campaign"
 	};
@@ -34,14 +27,8 @@ public class ContentHasher {
 		return sha256(normalized);
 	}
 
-	/**
-	 * Minusculas, sem acento, sem pontuacao e com espacos colapsados.
-	 *
-	 * <p>"OpenAI lanca o GPT-6 — agora com raciocinio" e "OpenAI lança o GPT-6: agora
-	 * com raciocínio" precisam gerar a mesma chave.
-	 */
 	public static String normalizeTitle(String title) {
-		if (Objects.isNull(title)) {
+		if (isNull(title)) {
 			return "";
 		}
 		String withoutAccents = Normalizer.normalize(title, Normalizer.Form.NFD)
@@ -52,20 +39,14 @@ public class ContentHasher {
 				.trim();
 	}
 
-	/**
-	 * Remove fragmento, parametros de tracking e barra final.
-	 *
-	 * <p>Url malformada volta como veio: e melhor deduplicar de menos do que descartar
-	 * um item porque a fonte publicou uma url estranha.
-	 */
 	public static String canonicalUrl(String url) {
-		if (Objects.isNull(url) || url.isBlank()) {
+		if (isNull(url) || url.isBlank()) {
 			return "";
 		}
 		try {
 			URI uri = new URI(url.trim());
 			String query = cleanQuery(uri.getQuery());
-			String path = Objects.isNull(uri.getPath()) ? "" : uri.getPath();
+			String path = isNull(uri.getPath()) ? "" : uri.getPath();
 			if (path.length() > 1 && path.endsWith("/")) {
 				path = path.substring(0, path.length() - 1);
 			}
@@ -85,7 +66,7 @@ public class ContentHasher {
 	}
 
 	private static String cleanQuery(String query) {
-		if (Objects.isNull(query) || query.isBlank()) {
+		if (isNull(query) || query.isBlank()) {
 			return null;
 		}
 		String cleaned = Arrays.stream(query.split("&"))
@@ -101,7 +82,7 @@ public class ContentHasher {
 	}
 
 	private static String lowerOrNull(String value) {
-		return Objects.isNull(value) ? null : value.toLowerCase(Locale.ROOT);
+		return isNull(value) ? null : value.toLowerCase(Locale.ROOT);
 	}
 
 	private static String sha256(String value) {

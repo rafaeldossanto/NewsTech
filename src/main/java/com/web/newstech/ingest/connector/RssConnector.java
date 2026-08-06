@@ -5,7 +5,7 @@ import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
-import com.web.newstech.ingest.ConnectorType;
+import com.web.newstech.ingest.enums.ConnectorType;
 import com.web.newstech.ingest.Source;
 import com.web.newstech.shared.config.NewsTechProperties;
 import lombok.RequiredArgsConstructor;
@@ -99,7 +99,7 @@ public class RssConnector implements SourceConnector {
 			SyndFeed feed = new SyndFeedInput().build(new XmlReader(stream));
 			return feed.getEntries().stream()
 					.limit(properties.ingest().maxItemsPerFetch())
-					.map(entry -> toFetchedItem(entry))
+					.map(this::toFetchedItem)
 					.filter(item -> Objects.nonNull(item.url()) && Objects.nonNull(item.title()))
 					.toList();
 		}

@@ -1,5 +1,6 @@
-package com.web.newstech.content;
+package com.web.newstech.content.repository;
 
+import com.web.newstech.content.TrackedEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;

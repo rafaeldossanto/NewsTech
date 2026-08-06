@@ -1,5 +1,7 @@
 package com.web.newstech.ingest;
 
+import com.web.newstech.ingest.enums.RawItemStatus;
+import com.web.newstech.ingest.model.Triage;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

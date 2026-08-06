@@ -1,5 +1,7 @@
 package com.web.newstech.ingest;
 
+import com.web.newstech.ingest.enums.ConnectorType;
+import com.web.newstech.ingest.repository.SourceRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
@@ -64,7 +66,7 @@ public class SourceSeeder implements InitializingBean {
 	}
 
 	record SeedEntry(String name, String feedUrl, ConnectorType connectorType, int trustWeight, boolean active,
-					 String note) {
+                     String note) {
 	}
 
 }

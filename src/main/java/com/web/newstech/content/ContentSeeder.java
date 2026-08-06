@@ -1,5 +1,8 @@
 package com.web.newstech.content;
 
+import com.web.newstech.content.repository.StoryRepository;
+import com.web.newstech.content.repository.TopicRepository;
+import com.web.newstech.content.repository.TrackedEntityRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
@@ -12,18 +15,6 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-/**
- * Carrega taxonomia e as stories de exemplo.
- *
- * <p>As stories do seed foram escritas a mao a partir de manchetes reais coletadas
- * pelo pipeline. Servem a dois propositos: dar conteudo de verdade para desenvolver
- * as telas antes de o estagio editorial existir, e depois virar os exemplos do prompt
- * do Opus - e o gabarito de como um resumo bom deve sair.
- *
- * <p>Como todo seed do projeto, so insere o que falta: nunca sobrescreve o que ja esta
- * no banco. Assim que o pipeline comecar a publicar de verdade, este arquivo deixa de
- * ter efeito sobre o conteudo existente.
- */
 @Slf4j
 @Component
 @RequiredArgsConstructor

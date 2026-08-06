@@ -9,13 +9,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Objects;
 
-/**
- * Formata quando algo foi publicado, do jeito que se le num portal.
- *
- * <p>Timestamp absoluto obriga o leitor a fazer a conta; num portal de noticias o que
- * importa e "isso e recente?". Passada uma semana a conta se inverte e a data absoluta
- * volta a ser mais util que "ha 9 dias".
- */
 @UtilityClass
 public class RelativeTime {
 
@@ -31,8 +24,6 @@ public class RelativeTime {
 
 		Duration passado = Duration.between(moment, Instant.now());
 
-		// Relogio da fonte adiantado em relacao ao nosso: tratar como agora em vez de
-		// exibir "ha -3 min", que so faz o portal parecer quebrado.
 		if (passado.isNegative() || passado.toMinutes() < 1) {
 			return "agora";
 		}

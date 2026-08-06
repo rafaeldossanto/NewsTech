@@ -1,4 +1,4 @@
-package com.web.newstech.ingest;
+package com.web.newstech.ingest.enums;
 
 /**
  * Estagio do item dentro do pipeline.
