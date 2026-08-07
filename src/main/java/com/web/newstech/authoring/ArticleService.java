@@ -1,6 +1,7 @@
 package com.web.newstech.authoring;
 
 import com.web.newstech.authoring.enums.ArticleStatus;
+import com.web.newstech.authoring.exceptions.PublishingException;
 import com.web.newstech.authoring.repository.ArticleRepository;
 import com.web.newstech.authoring.repository.UserRepository;
 import com.web.newstech.shared.Slugs;

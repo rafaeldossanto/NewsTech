@@ -1,4 +1,4 @@
-package com.web.newstech.curation;
+package com.web.newstech.curation.triage;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

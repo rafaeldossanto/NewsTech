@@ -3,6 +3,7 @@ package com.web.newstech.authoring;
 import com.mongodb.MongoWriteException;
 import com.web.newstech.TestcontainersConfiguration;
 import com.web.newstech.authoring.enums.Role;
+import com.web.newstech.authoring.exceptions.RegistrationException;
 import com.web.newstech.authoring.repository.UserRepository;
 import org.bson.Document;
 import org.junit.jupiter.api.BeforeEach;

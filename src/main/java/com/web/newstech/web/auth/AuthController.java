@@ -1,7 +1,7 @@
 package com.web.newstech.web.auth;
 
-import com.web.newstech.authoring.RegistrationException;
 import com.web.newstech.authoring.UserService;
+import com.web.newstech.authoring.exceptions.RegistrationException;
 import com.web.newstech.content.Topic;
 import com.web.newstech.content.repository.TopicRepository;
 import lombok.RequiredArgsConstructor;

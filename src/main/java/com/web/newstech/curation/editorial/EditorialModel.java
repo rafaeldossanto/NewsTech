@@ -1,6 +1,8 @@
 package com.web.newstech.curation.editorial;
 
 import com.web.newstech.curation.cluster.ItemCluster;
+import com.web.newstech.curation.exceptions.EditorialException;
+import com.web.newstech.curation.exceptions.ModelRefusedException;
 
 /**
  * Porta do estágio 2.

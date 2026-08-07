@@ -1,4 +1,4 @@
-package com.web.newstech.curation.editorial;
+package com.web.newstech.curation.exceptions;
 
 /** Falha ao produzir a decisão editorial de um cluster. Não interrompe o ciclo. */
 public class EditorialException extends RuntimeException {

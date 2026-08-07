@@ -1,4 +1,4 @@
-package com.web.newstech.authoring;
+package com.web.newstech.authoring.exceptions;
 
 public class PublishingException extends RuntimeException {
 

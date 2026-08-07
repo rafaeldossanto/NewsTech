@@ -1,4 +1,4 @@
-package com.web.newstech.curation;
+package com.web.newstech.curation.triage;
 
 import java.util.List;
 

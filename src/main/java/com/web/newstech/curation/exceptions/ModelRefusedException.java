@@ -1,4 +1,4 @@
-package com.web.newstech.curation.editorial;
+package com.web.newstech.curation.exceptions;
 
 /**
  * O modelo recusou-se a responder.

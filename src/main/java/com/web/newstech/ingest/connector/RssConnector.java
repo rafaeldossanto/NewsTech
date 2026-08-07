@@ -7,6 +7,7 @@ import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 import com.web.newstech.ingest.enums.ConnectorType;
 import com.web.newstech.ingest.Source;
+import com.web.newstech.ingest.exceptions.FetchException;
 import com.web.newstech.shared.config.NewsTechProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

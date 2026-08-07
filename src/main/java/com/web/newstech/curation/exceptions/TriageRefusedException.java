@@ -1,4 +1,4 @@
-package com.web.newstech.curation;
+package com.web.newstech.curation.exceptions;
 
 /**
  * O modelo recusou-se a classificar o item. Nao e erro de codigo: e resposta legitima

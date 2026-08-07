@@ -1,4 +1,4 @@
-package com.web.newstech.curation;
+package com.web.newstech.curation.exceptions;
 
 public class TriageException extends RuntimeException {
 

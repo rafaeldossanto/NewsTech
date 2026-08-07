@@ -1,6 +1,7 @@
 package com.web.newstech.authoring;
 
 import com.web.newstech.authoring.enums.Role;
+import com.web.newstech.authoring.exceptions.RegistrationException;
 import com.web.newstech.authoring.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;

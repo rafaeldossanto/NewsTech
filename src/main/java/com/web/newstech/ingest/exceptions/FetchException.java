@@ -1,4 +1,4 @@
-package com.web.newstech.ingest.connector;
+package com.web.newstech.ingest.exceptions;
 
 /**
  * Falha ao coletar de uma fonte. Nao interrompe o ciclo: o {@code IngestService}

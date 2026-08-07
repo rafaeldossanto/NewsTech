@@ -1,5 +1,6 @@
-package com.web.newstech.curation;
+package com.web.newstech.curation.triage;
 
+import com.web.newstech.curation.exceptions.TriageRefusedException;
 import com.web.newstech.ingest.RawItem;
 import com.web.newstech.ingest.enums.RawItemStatus;
 import com.web.newstech.ingest.model.Triage;
