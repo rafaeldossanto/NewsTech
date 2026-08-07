@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/base}">
+<head>
+	<title th:text="${pageTitle}">Autor</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+	<header class="page-head">
+		<div class="kicker">Autor</div>
+		<h1 th:text="${author.nameForDisplay()}">Nome</h1>
+		<p>
+			<span th:text="'@' + ${author.username}">@usuario</span>
+			<span th:if="${author.publishedCount > 0}"
+				  th:text="' · ' + ${author.publishedCount} + (${author.publishedCount} == 1 ? ' artigo' : ' artigos')"></span>
+		</p>
+	</header>
+
+	<div class="grid" th:if="${!articles.isEmpty()}">
+		<th:block th:each="a : ${articles}">
+			<div th:replace="~{fragments/feed :: card(${a})}"></div>
+		</th:block>
+	</div>
+
+	<p class="empty" th:if="${articles.isEmpty()}">
+		Este autor ainda não publicou nada.
+	</p>
+
+</div>
+
+</body>
+</html>

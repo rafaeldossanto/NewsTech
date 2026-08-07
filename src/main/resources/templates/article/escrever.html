@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/base}">
+<head>
+	<title th:text="${pageTitle}">Escrever</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+	<div class="write-page">
+		<header class="page-head">
+			<div class="kicker" th:text="${editing} ? 'Editando' : 'Novo artigo'">Novo artigo</div>
+			<h1 th:text="${editing} ? 'Editar artigo' : 'Escrever artigo'">Escrever artigo</h1>
+			<p th:unless="${editing}">
+				Você pode publicar um artigo a cada 24 horas. Os primeiros aparecem em
+				<a th:href="@{/artigos}">Artigos</a>; depois de três publicados, sua conta passa a
+				aparecer também na home e nos tópicos.
+			</p>
+		</header>
+
+		<p class="form-error" th:if="${error}" th:text="${error}"></p>
+
+		<form th:action="${editing} ? @{'/escrever/' + ${editing}} : @{/escrever}" method="post" class="stacked-form">
+			<label>
+				Título
+				<input type="text" name="title" th:value="${title}" required maxlength="120">
+			</label>
+			<label>
+				Subtítulo <small>opcional — aparece como resumo nas listas</small>
+				<input type="text" name="subtitle" th:value="${subtitle}" maxlength="240">
+			</label>
+			<label>
+				Texto
+				<textarea name="body" required th:text="${body}"></textarea>
+				<small>
+					Markdown: <code>##</code> subtítulo, <code>**negrito**</code>, <code>*itálico*</code>,
+					<code>- item</code> para lista, <code>[texto](url)</code> para link.
+				</small>
+			</label>
+			<fieldset class="topic-picker">
+				<legend>Tópicos</legend>
+				<label class="topic-option" th:each="t : ${topics}">
+					<input type="checkbox" name="topics" th:value="${t.slug}"
+						   th:checked="${selectedTopics != null and #lists.contains(selectedTopics, t.slug)}">
+					<span th:text="${t.name}">Tópico</span>
+				</label>
+			</fieldset>
+			<button type="submit" th:text="${editing} ? 'Salvar alterações' : 'Publicar'">Publicar</button>
+		</form>
+	</div>
+
+</div>
+
+</body>
+</html>

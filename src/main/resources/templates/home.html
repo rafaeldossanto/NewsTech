@@ -50,8 +50,8 @@
 		</h2>
 
 		<div class="radar" th:if="${!radar.isEmpty()}">
-			<th:block th:each="s : ${radar}">
-				<div th:replace="~{fragments/story :: radar(${s})}"></div>
+			<th:block th:each="entry : ${radar}">
+				<div th:replace="~{fragments/feed :: item(${entry})}"></div>
 			</th:block>
 		</div>
 

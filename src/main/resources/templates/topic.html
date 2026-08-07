@@ -16,9 +16,9 @@
 		<p th:if="${topic.description}" th:text="${topic.description}">Descrição</p>
 	</header>
 
-	<div class="grid" id="storyGrid" th:if="${!stories.isEmpty()}">
-		<th:block th:each="s : ${stories}">
-			<div th:replace="~{fragments/story :: card(${s})}"></div>
+	<div class="grid" id="storyGrid" th:if="${!entries.isEmpty()}">
+		<th:block th:each="entry : ${entries}">
+			<div th:replace="~{fragments/feed :: cardItem(${entry})}"></div>
 		</th:block>
 	</div>
 
@@ -26,8 +26,8 @@
 		<button type="button" id="loadMore" th:attr="data-topic=${topic.slug}">carregar mais</button>
 	</div>
 
-	<p class="empty" th:if="${stories.isEmpty()}">
-		Ainda não há peças publicadas neste tópico.
+	<p class="empty" th:if="${entries.isEmpty()}">
+		Ainda não há nada publicado neste tópico.
 	</p>
 
 </div>

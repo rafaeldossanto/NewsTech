@@ -1,5 +1,8 @@
 package com.web.newstech.web;
 
+import com.web.newstech.authoring.Article;
+import com.web.newstech.authoring.enums.ArticleStatus;
+import com.web.newstech.authoring.repository.ArticleRepository;
 import com.web.newstech.content.Importance;
 import com.web.newstech.content.Story;
 import com.web.newstech.content.repository.StoryRepository;
@@ -34,6 +37,7 @@ public class PortalController {
 	private final StoryRepository storyRepository;
 	private final TopicRepository topicRepository;
 	private final TrackedEntityRepository entityRepository;
+	private final ArticleRepository articleRepository;
 
 	@ModelAttribute("navTopics")
 	public List<Topic> navTopics() {
@@ -48,15 +52,22 @@ public class PortalController {
 		List<Story> destaques = storyRepository.findByImportanceOrderByPublishedAtDesc(
 				Importance.DESTAQUE, PageRequest.of(0, LIMITE_DESTAQUES));
 
-		List<Story> radar = storyRepository.findByPublishedAtAfterOrderByPublishedAtDesc(
-						Instant.now().minus(HORAS_DO_RADAR, ChronoUnit.HOURS),
-						PageRequest.of(0, LIMITE_RADAR)).stream()
+		Instant desde = Instant.now().minus(HORAS_DO_RADAR, ChronoUnit.HOURS);
+
+		List<Story> radarStories = storyRepository.findByPublishedAtAfterOrderByPublishedAtDesc(
+						desde, PageRequest.of(0, LIMITE_RADAR)).stream()
 				.filter(story -> manchetes.stream().noneMatch(m -> m.getSlug().equals(story.getSlug())))
 				.toList();
 
+		// Artigos entram no radar, nunca em manchete ou destaque - essas posicoes seguem
+		// sendo da curadoria. E so entra quem ja saiu da quarentena de conta nova.
+		List<Article> radarArticles = articleRepository
+				.findByStatusAndHomeEligibleTrueAndPublishedAtAfterOrderByPublishedAtDesc(
+						ArticleStatus.PUBLISHED, desde, PageRequest.of(0, LIMITE_RADAR));
+
 		model.addAttribute("lead", manchetes.isEmpty() ? null : StoryView.from(manchetes.getFirst()));
 		model.addAttribute("highlights", StoryView.from(destaques));
-		model.addAttribute("radar", StoryView.from(radar));
+		model.addAttribute("radar", FeedItem.merge(radarStories, radarArticles, LIMITE_RADAR));
 		return "home";
 	}
 
@@ -98,8 +109,11 @@ public class PortalController {
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Empresa não acompanhada"));
 
 		model.addAttribute("entity", entity);
-		model.addAttribute("stories", StoryView.from(
-				storyRepository.findByEntitiesContainingOrderByPublishedAtDesc(slug, PageRequest.of(0, LIMITE_LISTA))));
+		// Hub de empresa e so de curadoria: entidades sao extraidas pela triagem, nao
+		// declaradas por quem escreve artigo.
+		model.addAttribute("entries", FeedItem.merge(
+				storyRepository.findByEntitiesContainingOrderByPublishedAtDesc(slug, PageRequest.of(0, LIMITE_LISTA)),
+				List.of(), LIMITE_LISTA));
 		model.addAttribute("pageTitle", entity.getName());
 		return "entity";
 	}
@@ -109,13 +123,19 @@ public class PortalController {
 		Topic topic = topicRepository.findBySlug(slug)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tópico não encontrado"));
 
-		List<Story> primeiraPagina =
+		List<Story> stories =
 				storyRepository.findByTopicsContainingOrderByPublishedAtDesc(slug, PageRequest.of(0, PAGINA));
+
+		List<Article> articles = articleRepository
+				.findByStatusAndHomeEligibleTrueAndTopicsContainingOrderByPublishedAtDesc(
+						ArticleStatus.PUBLISHED, slug, PageRequest.of(0, PAGINA));
 
 		model.addAttribute("topic", topic);
 		model.addAttribute("activeTopic", slug);
-		model.addAttribute("stories", StoryView.from(primeiraPagina));
-		model.addAttribute("hasMore", primeiraPagina.size() == PAGINA);
+		model.addAttribute("entries", FeedItem.merge(stories, articles, PAGINA));
+		// A paginacao seguinte traz so pecas curadas: elas sao o volume, e misturar duas
+		// colecoes com offsets independentes daria item repetido ou pulado.
+		model.addAttribute("hasMore", stories.size() == PAGINA);
 		model.addAttribute("pageTitle", topic.getName());
 		return "topic";
 	}
@@ -126,9 +146,10 @@ public class PortalController {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tópico não encontrado");
 		}
 
-		model.addAttribute("stories", StoryView.from(
-				storyRepository.findByTopicsContainingOrderByPublishedAtDesc(
-						slug, PageRequest.of(Math.max(page, 0), PAGINA))));
+		List<Story> stories = storyRepository.findByTopicsContainingOrderByPublishedAtDesc(
+				slug, PageRequest.of(Math.max(page, 0), PAGINA));
+
+		model.addAttribute("entries", FeedItem.merge(stories, List.of(), PAGINA));
 		return "fragments/story-list :: page";
 	}
 

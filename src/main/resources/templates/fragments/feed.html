@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!--
+	Linha da timeline, servindo peça curada e artigo assinado.
+	A distinção é explícita: peça mostra a FONTE, artigo mostra o AUTOR com selo.
+-->
+<article th:fragment="item(entry)" class="radar-item">
+	<span class="when" th:text="${entry.relativeTime}">há 2h</span>
+	<div>
+		<h3><a th:href="@{${entry.href}}" th:text="${entry.title}">Título</a></h3>
+	</div>
+	<div class="line">
+		<div class="meta">
+			<th:block th:if="${entry.article}">
+				<span class="badge-article">artigo</span>
+				<a class="byline" th:href="@{${entry.bylineHref}}" th:text="${entry.byline}">autor</a>
+			</th:block>
+			<th:block th:unless="${entry.article}">
+				<span class="src" th:text="${entry.byline}">Fonte</span>
+				<th:block th:if="${entry.sourceCount > 1}">
+					<span class="sep">/</span>
+					<span th:text="${entry.sourceCount} + ' fontes'">3 fontes</span>
+				</th:block>
+			</th:block>
+			<span th:if="${entry.headliner}" class="flag">manchete</span>
+		</div>
+	</div>
+</article>
+
+<!-- Card unificado das grades de tópico: serve peça curada e artigo. -->
+<article th:fragment="cardItem(entry)" class="card">
+	<div class="meta">
+		<th:block th:if="${entry.article}">
+			<span class="badge-article">artigo</span>
+			<a class="byline" th:href="@{${entry.bylineHref}}" th:text="${entry.byline}">autor</a>
+		</th:block>
+		<th:block th:unless="${entry.article}">
+			<span class="src" th:text="${entry.byline}">Fonte</span>
+			<th:block th:if="${entry.sourceCount > 1}">
+				<span class="sep">/</span>
+				<span th:text="${entry.sourceCount} + ' fontes'">3 fontes</span>
+			</th:block>
+		</th:block>
+		<span class="sep">/</span>
+		<time th:datetime="${entry.publishedAtIso}" th:text="${entry.relativeTime}">há 2h</time>
+	</div>
+	<h3><a th:href="@{${entry.href}}" th:text="${entry.title}">Título</a></h3>
+	<p th:if="${entry.summary}" th:text="${entry.summary}">Resumo</p>
+</article>
+
+<!-- Card de artigo para as grades de /artigos e do hub do autor. -->
+<article th:fragment="card(article)" class="card">
+	<div class="meta">
+		<span class="badge-article">artigo</span>
+		<a class="byline" th:href="@{'/autor/' + ${article.authorUsername}}" th:text="${article.authorName}">autor</a>
+		<span class="sep">/</span>
+		<time th:datetime="${article.publishedAtIso}" th:text="${article.relativeTime}">há 2h</time>
+	</div>
+	<h3><a th:href="@{'/artigo/' + ${article.slug}}" th:text="${article.title}">Título</a></h3>
+	<p th:if="${article.subtitle}" th:text="${article.subtitle}">Subtítulo</p>
+</article>
+
+</body>
+</html>

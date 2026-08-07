@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/base}">
+<head>
+	<title th:text="${pageTitle}">Artigo</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+	<article class="article">
+		<div class="meta">
+			<span class="badge-article">artigo assinado</span>
+			<a class="byline" th:href="@{'/autor/' + ${article.authorUsername}}" th:text="${article.authorName}">autor</a>
+			<span class="sep">/</span>
+			<time th:datetime="${article.publishedAtIso}" th:text="${article.relativeTime}">há 2h</time>
+			<span th:if="${article.edited}" class="sep">/</span>
+			<span th:if="${article.edited}">editado</span>
+		</div>
+
+		<h1 th:text="${article.title}">Título</h1>
+		<p class="summary" th:if="${article.subtitle}" th:text="${article.subtitle}">Subtítulo</p>
+
+		<!--
+			Vem do MarkdownRenderer, que escapa HTML no CommonMark e ainda passa por
+			Jsoup.clean. É o único ponto do sistema onde texto de terceiros vira HTML.
+		-->
+		<div class="article-body" th:utext="${article.bodyHtml}">Corpo</div>
+
+		<div class="chips" th:if="${!article.topics.isEmpty()}" style="margin-top:2rem">
+			<a class="chip" th:each="t : ${article.topics}" th:href="@{'/' + ${t}}" th:text="${t}">tópico</a>
+		</div>
+
+		<p style="margin-top:2rem" sec:authorize="isAuthenticated()">
+			<a class="header-link" th:href="@{'/escrever/' + ${article.slug}}">editar este artigo</a>
+		</p>
+	</article>
+
+</div>
+
+</body>
+</html>
