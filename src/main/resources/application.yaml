@@ -53,6 +53,17 @@ newstech:
     triage-interval: PT15M
     editorial-interval: PT20M
 
+  # Dolares por milhao de tokens. Leitura de cache custa 10% do input.
+  pricing:
+    claude-haiku-4-5:
+      input-per-million: 1.00
+      output-per-million: 5.00
+      cached-input-per-million: 0.10
+    claude-opus-5:
+      input-per-million: 5.00
+      output-per-million: 25.00
+      cached-input-per-million: 0.50
+
   authoring:
     publish-window: PT24H
     quarantine-articles: 3

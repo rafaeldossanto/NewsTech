@@ -1,23 +1,12 @@
 package com.web.newstech.curation;
 
-import com.anthropic.client.AnthropicClient;
-import com.anthropic.models.messages.CacheControlEphemeral;
-import com.anthropic.models.messages.MessageCreateParams;
-import com.anthropic.models.messages.StopReason;
-import com.anthropic.models.messages.StructuredContentBlock;
-import com.anthropic.models.messages.StructuredMessage;
-import com.anthropic.models.messages.StructuredMessageCreateParams;
-import com.anthropic.models.messages.StructuredTextBlock;
-import com.anthropic.models.messages.TextBlockParam;
-import com.anthropic.models.messages.Usage;
 import com.web.newstech.ingest.RawItem;
-import com.web.newstech.ingest.repository.RawItemRepository;
 import com.web.newstech.ingest.enums.RawItemStatus;
 import com.web.newstech.ingest.model.Triage;
+import com.web.newstech.ingest.repository.RawItemRepository;
 import com.web.newstech.shared.config.NewsTechProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TriageService {
 
-	private final ObjectProvider<AnthropicClient> clientProvider;
+	private final TriageModel triageModel;
 	private final RawItemRepository rawItemRepository;
 	private final NewsTechProperties properties;
 
@@ -60,10 +49,15 @@ public class TriageService {
 				applyTriage(item);
 				processed++;
 			}
+			catch (TriageRefusedException ex) {
+				// Recusa nao e bug: e resposta legitima. O item precisa de olhar humano,
+				// nao de nova tentativa.
+				log.warn("Triagem recusada para {}: {}", item.getUrl(), ex.getMessage());
+				marcar(item, RawItemStatus.NEEDS_REVIEW);
+			}
 			catch (RuntimeException ex) {
 				log.error("Falha ao triar item {} ({}): {}", item.getId(), item.getUrl(), ex.getMessage());
-				item.setStatus(RawItemStatus.NEEDS_REVIEW);
-				rawItemRepository.save(item);
+				marcar(item, RawItemStatus.NEEDS_REVIEW);
 			}
 		}
 
@@ -72,23 +66,8 @@ public class TriageService {
 	}
 
 	private void applyTriage(RawItem item) {
-		StructuredMessage<TriageResult> message = call(item);
-
-		// Precisa vir antes de tocar em content(): numa recusa a lista nao traz o bloco
-		// de texto esperado, e indexar direto quebraria com um erro que nao explica nada.
-		if (message.stopReason().filter(StopReason.REFUSAL::equals).isPresent()) {
-			log.warn("Modelo recusou a triagem do item {} ({})", item.getId(), item.getUrl());
-			item.setStatus(RawItemStatus.NEEDS_REVIEW);
-			rawItemRepository.save(item);
-			return;
-		}
-		if (message.stopReason().filter(StopReason.MAX_TOKENS::equals).isPresent()) {
-			throw new IllegalStateException(
-					"Resposta truncada por max_tokens - aumentar newstech.claude.triage-max-tokens");
-		}
-
-		TriageResult result = extractResult(message);
-		Usage usage = message.usage();
+		TriageOutcome outcome = triageModel.classify(item);
+		TriageResult result = outcome.result();
 
 		item.setTriage(new Triage(
 				result.topics(),
@@ -96,10 +75,10 @@ public class TriageService {
 				result.language(),
 				result.relevanceScore(),
 				result.reasoning(),
-				properties.claude().triageModel(),
-				usage.inputTokens(),
-				usage.outputTokens(),
-				usage.cacheReadInputTokens().orElse(0L),
+				outcome.model(),
+				outcome.inputTokens(),
+				outcome.outputTokens(),
+				outcome.cachedInputTokens(),
 				Instant.now()));
 
 		boolean relevant = result.relevanceScore() >= properties.claude().relevanceThreshold();
@@ -109,32 +88,9 @@ public class TriageService {
 		log.debug("Item {} triado: score {} -> {}", item.getId(), result.relevanceScore(), item.getStatus());
 	}
 
-	private StructuredMessage<TriageResult> call(RawItem item) {
-		StructuredMessageCreateParams<TriageResult> params = MessageCreateParams.builder()
-				.model(properties.claude().triageModel())
-				.maxTokens(properties.claude().triageMaxTokens())
-				.systemOfTextBlockParams(List.of(TextBlockParam.builder()
-						.text(TriagePrompt.SYSTEM)
-						// Prefixo identico em toda chamada: TTL de 1h porque os ciclos
-						// sao espacados e um TTL de 5min expiraria entre eles.
-						.cacheControl(CacheControlEphemeral.builder()
-								.ttl(CacheControlEphemeral.Ttl.TTL_1H)
-								.build())
-						.build()))
-				.addUserMessage(TriagePrompt.userMessage(item))
-				.outputConfig(TriageResult.class)
-				.build();
-
-		return clientProvider.getObject().messages().create(params);
-	}
-
-	private TriageResult extractResult(StructuredMessage<TriageResult> message) {
-		return message.content().stream()
-				.filter(StructuredContentBlock::isText)
-				.map(StructuredContentBlock::asText)
-				.map(StructuredTextBlock::text)
-				.findFirst()
-				.orElseThrow(() -> new IllegalStateException("Resposta sem bloco de texto estruturado"));
+	private void marcar(RawItem item, RawItemStatus status) {
+		item.setStatus(status);
+		rawItemRepository.save(item);
 	}
 
 }

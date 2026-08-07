@@ -15,7 +15,12 @@ import java.time.Duration;
 @Validated
 @ConfigurationProperties(prefix = "newstech")
 public record NewsTechProperties(Mongo mongo, Ingest ingest, Claude claude, Cluster cluster, Admin admin,
-								 Authoring authoring) {
+								 Authoring authoring, java.util.Map<String, ModelPrice> pricing) {
+
+	/* Precos em dolar por milhao de tokens. Ficam em configuracao, e nao no codigo,
+	 * porque tabela de preco muda sem aviso e nao deveria exigir novo build. */
+	public record ModelPrice(double inputPerMillion, double outputPerMillion, double cachedInputPerMillion) {
+	}
 
 	public record Authoring(
 

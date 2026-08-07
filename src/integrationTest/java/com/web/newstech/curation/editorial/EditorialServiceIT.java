@@ -63,7 +63,10 @@ class EditorialServiceIT {
 	@BeforeEach
 	void preparar() {
 		rawItemRepository.deleteAll();
-		storyRepository.deleteAll();
+		// Preserva as pecas do seed, que outros testes no mesmo contexto usam.
+		storyRepository.deleteAll(storyRepository.findAll().stream()
+				.filter(story -> story.getModel() != null)
+				.toList());
 
 		arsId = salvarFonte("Ars Technica", 80).getId();
 		guardianId = salvarFonte("The Guardian", 70).getId();
@@ -78,7 +81,7 @@ class EditorialServiceIT {
 
 		assertThat(editorialService.publish(cluster)).isTrue();
 
-		Story story = storyRepository.findAll().getFirst();
+		Story story = publicadasNoTeste().getFirst();
 		assertThat(story.getSources()).hasSize(3);
 		assertThat(story.getRawItemIds()).hasSize(3);
 		assertThat(story.getSlug()).isEqualTo("modelos-de-ia-usaram-identidades-falsas-em-teste-do-reino-unido");
@@ -104,7 +107,7 @@ class EditorialServiceIT {
 
 		editorialService.publish(cluster);
 
-		assertThat(storyRepository.findAll().getFirst().getSources())
+		assertThat(publicadasNoTeste().getFirst().getSources())
 				.extracting(StorySource::sourceName)
 				.containsExactly("Ars Technica", "The Guardian");
 	}
@@ -118,7 +121,7 @@ class EditorialServiceIT {
 
 		editorialService.publish(cluster);
 
-		Story story = storyRepository.findAll().getFirst();
+		Story story = publicadasNoTeste().getFirst();
 		assertThat(story.getSources())
 				.as("crédito errado é pior que crédito nenhum")
 				.hasSize(2);
@@ -153,7 +156,7 @@ class EditorialServiceIT {
 				"compilado promocional de anúncios já publicados, sem fato novo"));
 
 		assertThat(editorialService.publish(cluster)).isFalse();
-		assertThat(storyRepository.findAll()).isEmpty();
+		assertThat(publicadasNoTeste()).isEmpty();
 		assertThat(rawItemRepository.findAll())
 				.allMatch(item -> item.getStatus() == RawItemStatus.DISCARDED);
 	}
@@ -165,7 +168,7 @@ class EditorialServiceIT {
 		stub.lancar(new ModelRefusedException("classificador recusou"));
 
 		assertThat(editorialService.publishPending()).isZero();
-		assertThat(storyRepository.findAll()).isEmpty();
+		assertThat(publicadasNoTeste()).isEmpty();
 		assertThat(rawItemRepository.findAll())
 				.as("recusa não é bug: o item precisa de olhar humano, não de nova tentativa")
 				.allMatch(item -> item.getStatus() == RawItemStatus.NEEDS_REVIEW);
@@ -178,10 +181,20 @@ class EditorialServiceIT {
 		stub.lancar(new EditorialException("Resposta truncada por max_tokens"));
 
 		assertThat(editorialService.publishPending()).isZero();
-		assertThat(storyRepository.findAll()).isEmpty();
+		assertThat(publicadasNoTeste()).isEmpty();
 	}
 
 	// ---------- apoio ----------
+
+	/**
+	 * So o que este teste publicou. O banco tambem carrega as pecas do seed, que outros
+	 * testes usam no mesmo contexto - findAll() aqui traria as duas coisas misturadas.
+	 */
+	private List<Story> publicadasNoTeste() {
+		return storyRepository.findAll().stream()
+				.filter(story -> story.getModel() != null)
+				.toList();
+	}
 
 	private ItemCluster clusterDeTres() {
 		Instant agora = Instant.now();
