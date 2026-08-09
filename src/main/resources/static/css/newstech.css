@@ -188,7 +188,14 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-
 
 /* ============ estruturas de secao ============ */
 
-main { padding: 2rem 0 4rem; }
+/* Precisa ser `main.shell`, nao `main`: o elemento carrega a classe .shell, que
+   ja define `padding: 0 var(--gutter)`. Classe vence seletor de elemento, entao
+   um `main { padding: ... }` aqui e silenciosamente descartado.
+   Longhands para nao derrubar o gutter lateral que vem do .shell. */
+main.shell {
+	padding-top: .75rem;
+	padding-bottom: 4rem;
+}
 
 .section-label {
 	font-family: var(--mono);
