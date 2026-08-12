@@ -44,15 +44,16 @@
 
 @media (prefers-color-scheme: dark) {
 	:root {
-		--paper:       #0E1114;
-		--surface:     #15191D;
-		--surface-alt: #1C2126;
-		--rule:        #262C32;
-		--rule-strong: #39424A;
+		/* no escuro os neutros sao puros: preto de verdade, sem vies de cor */
+		--paper:       #000000;
+		--surface:     #0D0D0D;
+		--surface-alt: #161616;
+		--rule:        #242424;
+		--rule-strong: #3A3A3A;
 
-		--ink:         #E7E9E7;
-		--ink-soft:    #A6AEB5;
-		--ink-faint:   #6E777F;
+		--ink:         #E8E8E8;
+		--ink-soft:    #A9A9A9;
+		--ink-faint:   #757575;
 
 		--accent:      #74B4D2;
 		--accent-soft: #172B35;
@@ -62,15 +63,15 @@
 }
 
 :root[data-theme="dark"] {
-	--paper:       #0E1114;
-	--surface:     #15191D;
-	--surface-alt: #1C2126;
-	--rule:        #262C32;
-	--rule-strong: #39424A;
+	--paper:       #000000;
+	--surface:     #0D0D0D;
+	--surface-alt: #161616;
+	--rule:        #242424;
+	--rule-strong: #3A3A3A;
 
-	--ink:         #E7E9E7;
-	--ink-soft:    #A6AEB5;
-	--ink-faint:   #6E777F;
+	--ink:         #E8E8E8;
+	--ink-soft:    #A9A9A9;
+	--ink-faint:   #757575;
 
 	--accent:      #74B4D2;
 	--accent-soft: #172B35;
@@ -183,6 +184,9 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-
 	padding: .3rem .6rem;
 	border-radius: 3px;
 	cursor: pointer;
+	/* O rotulo alterna entre "claro" e "escuro"; largura fixa para o header nao pular. */
+	min-width: 4.75rem;
+	text-align: center;
 }
 .theme-toggle:hover { color: var(--ink); border-color: var(--ink-faint); }
 

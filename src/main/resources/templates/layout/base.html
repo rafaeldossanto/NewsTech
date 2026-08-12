@@ -40,6 +40,7 @@
 			</th:block>
 			<a class="header-link" th:href="@{/entrar}" sec:authorize="!isAuthenticated()">entrar</a>
 			<button class="theme-toggle" type="button" id="themeToggle" aria-label="Alternar tema claro e escuro">tema</button>
+			<!-- O rotulo vira "claro"/"escuro" no script do rodape, quando o tema efetivo e conhecido. -->
 		</div>
 	</div>
 </header>
@@ -63,17 +64,34 @@
 	(function () {
 		var toggle = document.getElementById('themeToggle');
 		if (!toggle) { return; }
+
+		var sistemaEscuro = window.matchMedia('(prefers-color-scheme: dark)');
+
+		// Sem escolha salva o tema e o que o sistema pede - nao ha atributo para ler.
+		function temaAtual() {
+			var escolhido = document.documentElement.getAttribute('data-theme');
+			if (escolhido) { return escolhido; }
+			return sistemaEscuro.matches ? 'dark' : 'light';
+		}
+
+		// O botao nomeia o destino, nao o estado: no escuro ele oferece "claro".
+		function rotular() {
+			var destino = temaAtual() === 'dark' ? 'claro' : 'escuro';
+			toggle.textContent = destino;
+			toggle.setAttribute('aria-label', 'Mudar para o tema ' + destino);
+		}
+
 		toggle.addEventListener('click', function () {
-			var root = document.documentElement;
-			var current = root.getAttribute('data-theme');
-			if (!current) {
-				// Sem escolha salva: parte do que o sistema pede e inverte.
-				current = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-			}
-			var next = current === 'dark' ? 'light' : 'dark';
-			root.setAttribute('data-theme', next);
-			try { localStorage.setItem('newstech-theme', next); } catch (e) { /* modo restrito */ }
+			var proximo = temaAtual() === 'dark' ? 'light' : 'dark';
+			document.documentElement.setAttribute('data-theme', proximo);
+			try { localStorage.setItem('newstech-theme', proximo); } catch (e) { /* modo restrito */ }
+			rotular();
 		});
+
+		// Enquanto o leitor nao escolher, o tema segue o sistema: o rotulo tem que acompanhar.
+		sistemaEscuro.addEventListener('change', rotular);
+
+		rotular();
 	})();
 </script>
 
